@@ -181483,9 +181483,6 @@
     "No view definition found for %@." : {
 
     },
-    "No view named %@ in this database" : {
-
-    },
     "This table requires a partition filter. Add a WHERE clause on the partition column." : {
 
     },
@@ -184262,7 +184259,19 @@
     "This database does not store whole documents" : {
 
     },
-    "PRIMARY is the primary key's name, and no other index can take it. Rename the index, or change the key on the Columns tab." : {
+    "The write did not finish within %d seconds, so MongoDB stopped it. Raise the query timeout in Settings if it needs longer." : {
+
+    },
+    "%d document(s) had already been changed when this failed. MongoDB does not undo them, so check the data before you run it again." : {
+
+    },
+    "Some documents may already have been changed when this failed. MongoDB does not undo them, so check the data before you run it again." : {
+
+    },
+    "%d document(s), and possibly more that MongoDB does not report, had already been changed when this failed. MongoDB does not undo them, so check the data before you run it again." : {
+
+    },
+    "The insert stopped at a document larger than MongoDB accepts." : {
 
     },
     "Cannot save changes to '%@'." : {
@@ -184398,6 +184407,12 @@
 
     },
     "The shell drops a field named __proto__ from a new document. Remove the field, then set it on the saved document." : {
+
+    },
+    "No view named %@ in this database" : {
+
+    },
+    "PRIMARY is the primary key's name, and no other index can take it. Rename the index, or change the key on the Columns tab." : {
 
     }
   },
