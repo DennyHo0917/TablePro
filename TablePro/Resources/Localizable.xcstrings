@@ -184247,9 +184247,6 @@
     "The field “%@” appears more than once." : {
 
     },
-    "The top-level field “%@” starts with $, which MongoDB reads as an operator." : {
-
-    },
     "The document is nested more than %d levels deep." : {
 
     },
