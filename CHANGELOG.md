@@ -123,6 +123,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.json` and `.ndjson` files opened in the Data Files window rather than as a DuckDB connection.
 - `$regex` and `$options` objects in MongoDB scripts and **Raw Filter** sent as operator documents, as in mongosh.
 - Whole numbers past 2^53 and `-0` stored as doubles by the MongoDB shell, as mongosh stores them.
+- Column type changes from the Structure tab confirmed under Safe Mode, like a dropped column.
+- No structure sync script for MongoDB, whose fields are read from a sample of documents.
 
 ### Removed
 
@@ -579,6 +581,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MongoDB filters, validators and pipelines with a `$type` or `$regex` object refused as "not a document MongoDB can read".
 - **New Table…** offered on databases that cannot create a table, such as Redis and Kafka.
 - Executing indicator and Stop button carried over for a moment onto the query tab switched to.
+- MongoDB fields that could not be renamed or removed from the Structure tab. (#3132)
+- Structure tab edits made during a save, cleared without being saved.
+- Rows not reloaded after a Structure save that failed partway through its statements.
 - Every window's front tab reloading, and asking to discard its edits, after a row import, a new table or a structure change.
 - Tabs showing old rows, columns, DDL or triggers after a save, import, structure change or materialized view refresh.
 - Tables with hidden columns querying a dropped column, or leaving out a new one, after a SQL file import or a structure change.

@@ -50,14 +50,8 @@ struct MongoWriteFailure: Error, LocalizedError, Equatable, Sendable {
         if let writeErrors = reply["writeErrors"] as? [[String: Any]], let first = writeErrors.first {
             return entry(first, stage: .document)
         }
-        if let concernError = reply["writeConcernError"] as? [String: Any]
-            ?? (reply["writeConcernErrors"] as? [[String: Any]])?.first {
-            let failure = entry(concernError, stage: .unconfirmed)
-            return MongoWriteFailure(
-                code: failure.code,
-                message: MongoScriptText.writeNotAcknowledged(reason: failure.message),
-                stage: .unconfirmed
-            )
+        if let failure = concernFailure(in: reply) {
+            return failure
         }
         if MongoScriptJson.numeric(reply["ok"]) == 0 {
             return entry(reply, stage: .command)
@@ -66,6 +60,29 @@ struct MongoWriteFailure: Error, LocalizedError, Equatable, Sendable {
             return entry(errorReply, stage: .command)
         }
         return nil
+    }
+
+    /// A reply that did what it was asked without the write concern it was given. mongosh's driver
+    /// throws on one from any command, `collMod` included, so the shell's `db.runCommand` does too.
+    static func concernFailure(fromReply replyJson: String) -> MongoWriteFailure? {
+        guard let data = replyJson.data(using: .utf8),
+              let reply = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return nil
+        }
+        return concernFailure(in: reply)
+    }
+
+    private static func concernFailure(in reply: [String: Any]) -> MongoWriteFailure? {
+        guard let concernError = reply["writeConcernError"] as? [String: Any]
+            ?? (reply["writeConcernErrors"] as? [[String: Any]])?.first else {
+            return nil
+        }
+        let failure = entry(concernError, stage: .unconfirmed)
+        return MongoWriteFailure(
+            code: failure.code,
+            message: MongoScriptText.writeNotAcknowledged(reason: failure.message),
+            stage: .unconfirmed
+        )
     }
 
     private static func entry(_ entry: [String: Any], stage: Stage) -> MongoWriteFailure {

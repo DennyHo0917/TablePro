@@ -25,14 +25,25 @@ extension DatabaseManager {
     /// The gate's sheet is the only confirmation a save gets. A refusal throws
     /// `ExecutionGateError.denied` and a Cancel throws `.cancelledByUser`, so the caller can keep
     /// the edits staged and stay quiet about a choice the user just made.
+    ///
+    /// The driver is asked `schemaChangeRefusalBeforeWriting` on the same connection, after the
+    /// user has confirmed and before the first statement, which is the only point a check that
+    /// reads the data belongs: SQL Preview composes the same script and must not pay for it. It is
+    /// asked `schemaChangeShortfallAfterWriting` after the last one, because a statement that
+    /// succeeds over many rows can still miss one another client wrote while it ran.
+    ///
+    /// A save that fails once its first statement has started reports the table changed, as a
+    /// successful one does. MongoDB keeps every document an `updateMany` changed before it stopped,
+    /// and MySQL, MariaDB and Oracle commit each DDL statement as it runs, so the rows on screen
+    /// can describe a table that has moved on.
     func executeSchemaChanges(
-        _ statements: [SchemaStatement],
+        _ script: SchemaChangeScript,
         databaseType: DatabaseType,
         scope: DatabaseScope,
-        table: String,
         gate: any ExecutionGate = ExecutionGateProvider.shared
     ) async throws {
         let route = schemaChangeRoute(for: scope)
+        let statements = script.statements
 
         let request = Self.schemaChangeAuthorizationRequest(statements, databaseType: databaseType, scope: scope)
         let schemaKind = request.kind
@@ -47,12 +58,13 @@ extension DatabaseManager {
                 route: route,
                 cancellation: .protectedWrite
             ) { driver in
+                try await Self.refuseBeforeWriting(script, scope: scope, on: driver)
                 let useTransaction = driver.supportsTransactions
                 if useTransaction {
                     try await driver.beginTransaction(mode: schemaKind.declaresWrite ? .readWrite : .serverDefault)
                 }
+                var measured: [TimeInterval] = []
                 do {
-                    var measured: [TimeInterval] = []
                     for stmt in statements {
                         let startedAt = Date()
                         _ = try await driver.execute(query: stmt.sql)
@@ -61,7 +73,6 @@ extension DatabaseManager {
                     if useTransaction {
                         try await driver.commitTransaction()
                     }
-                    return measured
                 } catch {
                     if useTransaction {
                         do {
@@ -70,9 +81,17 @@ extension DatabaseManager {
                             Self.logger.error("Rollback failed after schema change error: \(error.localizedDescription)")
                         }
                     }
-                    throw DatabaseError.queryFailed("Schema change failed: \(error.localizedDescription)")
+                    throw SchemaChangeFailedAfterWriting(message: "Schema change failed: \(error.localizedDescription)")
                 }
+                try await Self.confirmFinished(script, scope: scope, on: driver)
+                return measured
             }
+        } catch let refusal as SchemaOperationRefusedError {
+            throw refusal
+        } catch let failure as SchemaChangeFailedAfterWriting {
+            Self.reportCatalogChangeAfterFailure(in: scope)
+            reportTableDefinitionChange(table: script.tableName, in: scope)
+            throw DatabaseError.queryFailed(failure.message)
         } catch {
             Self.reportCatalogChangeAfterFailure(in: scope)
             throw error
@@ -95,9 +114,7 @@ extension DatabaseManager {
             )
         }
 
-        AppCommands.shared.objectChanged.send(
-            DatabaseObjectChange(connectionId: scope.connectionId, scope: scope, name: table, kind: .structure)
-        )
+        reportTableDefinitionChange(table: script.tableName, in: scope)
         CatalogChangeService.post(
             .changed(CatalogChange(connectionId: scope.connectionId, database: scope.database, kinds: .tables))
         )
@@ -122,10 +139,22 @@ extension DatabaseManager {
         )
     }
 
+    /// Tells everything that remembers the table's definition that it changed: the session's driver,
+    /// which may keep what it learned about the columns, and every window, whose tabs on the table
+    /// reload or are marked to reload their rows and structure. Addressed by the table, so a tab on
+    /// another table in the same database is left alone.
+    func reportTableDefinitionChange(table: String, in scope: DatabaseScope) {
+        activeSessions[scope.connectionId]?.driver?.tableDefinitionDidChange(table: table, schema: scope.schema)
+        AppCommands.shared.objectChanged.send(
+            DatabaseObjectChange(connectionId: scope.connectionId, scope: scope, name: table, kind: .structure)
+        )
+    }
+
     /// Destructive when the text reads that way or when any statement was generated as one. The
     /// text alone cannot see that `ALTER COLUMN .. TYPE`, `MODIFY COLUMN .. NOT NULL` or an added
-    /// `CHECK` can lose or refuse existing rows, and a destructive kind is confirmed at every
-    /// Safe Mode level, Silent included.
+    /// `CHECK` can lose or refuse existing rows, or that a removed MongoDB field, an `updateMany`
+    /// with `$unset`, drops data. A destructive kind is confirmed at every Safe Mode level, Silent
+    /// included.
     nonisolated static func schemaOperationKind(
         for statements: [SchemaStatement],
         combinedSQL: String,
@@ -133,6 +162,43 @@ extension DatabaseManager {
     ) -> OperationKind {
         let destructiveText = QueryClassifier.classifyTier(combinedSQL, databaseType: databaseType) == .destructive
         return destructiveText || statements.contains(where: \.isDestructive) ? .destructiveQuery : .schemaMutation
+    }
+
+    nonisolated private static func refuseBeforeWriting(
+        _ script: SchemaChangeScript,
+        scope: DatabaseScope,
+        on driver: DatabaseDriver
+    ) async throws {
+        let refusal = try await driver.schemaChangeRefusalBeforeWriting(
+            table: script.tableName,
+            schema: scope.schema,
+            operations: script.operations,
+            review: script.review
+        )
+        if let refusal {
+            throw SchemaOperationRefusedError(reason: refusal)
+        }
+    }
+
+    nonisolated private static func confirmFinished(
+        _ script: SchemaChangeScript,
+        scope: DatabaseScope,
+        on driver: DatabaseDriver
+    ) async throws {
+        let shortfall: String?
+        do {
+            shortfall = try await driver.schemaChangeShortfallAfterWriting(
+                table: script.tableName,
+                schema: scope.schema,
+                operations: script.operations,
+                review: script.review
+            )
+        } catch {
+            throw SchemaChangeFailedAfterWriting(message: error.localizedDescription)
+        }
+        if let shortfall {
+            throw SchemaChangeFailedAfterWriting(message: shortfall)
+        }
     }
 
     /// Run a Create Table draft's statements, on the same isolated route and in the same shape as
@@ -233,4 +299,10 @@ extension DatabaseManager {
             .changed(CatalogChange(connectionId: scope.connectionId, database: scope.database, kinds: .tables))
         )
     }
+}
+
+/// A schema save that stopped once its statements had started to run, so the table may have
+/// changed even though the save did not finish.
+private struct SchemaChangeFailedAfterWriting: Error {
+    let message: String
 }

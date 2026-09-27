@@ -39,6 +39,17 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
     /// user picks one for the row.
     private var indexesAddedClustered: Set<UUID> = []
 
+    /// The edits a save in flight is writing, from the press until the save ends.
+    ///
+    /// While it is set nothing stages, undoes, discards or reloads. The save writes what it read at
+    /// the press and clears it when it lands, so an edit accepted in between is missing from the
+    /// script it runs and would then be cleared with the edits it did run. On MongoDB the time in
+    /// between includes a read of every document the save changes, which can run for as long as
+    /// the query timeout.
+    @Published private(set) var heldSave: StructureSaveSnapshot?
+
+    var isHeldForSave: Bool { heldSave != nil }
+
     // MARK: - Undo/Redo Support
 
     /// Private `NSUndoManager` owned by this change manager. Each
@@ -65,8 +76,8 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
         return manager
     }()
 
-    var canUndo: Bool { undoManager.canUndo }
-    var canRedo: Bool { undoManager.canRedo }
+    var canUndo: Bool { !isHeldForSave && undoManager.canUndo }
+    var canRedo: Bool { !isHeldForSave && undoManager.canRedo }
 
     /// Mirrors `DataChangeManager.registerUndo`. The `groupingLevel` check is what lets
     /// `performAsOneUndoStep` nest: inside one, a group is already open and this adds to it rather
@@ -83,6 +94,7 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
     /// selection is the case that needs it: the grid calls `deleteColumn` once per row, and one
     /// Cmd+Z should bring the whole selection back.
     func performAsOneUndoStep(_ body: () -> Void) {
+        guard !isHeldForSave else { return }
         undoManager.beginUndoGrouping()
         defer { undoManager.endUndoGrouping() }
         body()
@@ -98,6 +110,7 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
         checkConstraints: [CheckConstraintInfo] = [],
         primaryKey: [String]
     ) {
+        guard !isHeldForSave else { return }
         self.tableName = tableName
 
         self.currentColumns = columns.map { EditableColumnDefinition.from($0) }
@@ -240,6 +253,7 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
         _ entity: Entity,
         using operations: SchemaEntityOperations<Entity>
     ) {
+        guard !isHeldForSave else { return }
         self[keyPath: operations.working].append(entity)
         let key = operations.identifier(entity.id)
         pendingChanges[key] = operations.addition(entity)
@@ -255,6 +269,7 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
         with newEntity: Entity,
         using operations: SchemaEntityOperations<Entity>
     ) {
+        guard !isHeldForSave else { return }
         if let workingIndex = self[keyPath: operations.working].firstIndex(where: { $0.id == id }) {
             let oldWorking = self[keyPath: operations.working][workingIndex]
             if oldWorking != newEntity {
@@ -287,6 +302,7 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
     }
 
     private func stageDeletion<Entity>(id: UUID, using operations: SchemaEntityOperations<Entity>) {
+        guard !isHeldForSave else { return }
         let key = operations.identifier(id)
         if let entity = self[keyPath: operations.current].first(where: { $0.id == id }) {
             registerUndo(operations.deleteActionName) { target in
@@ -381,6 +397,7 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
     /// row-specific affordance and the global undo stack are independent
     /// affordances. The data tab uses the same separation.
     func undoDelete(for tab: StructureTab, at row: Int) {
+        guard !isHeldForSave else { return }
         let key: SchemaChangeIdentifier
         switch tab {
         case .columns:
@@ -654,6 +671,7 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
     }
 
     func discardChanges() {
+        guard !isHeldForSave else { return }
         pendingChanges.removeAll()
         changeOrder.removeAll()
         validationErrors.removeAll()
@@ -667,15 +685,38 @@ final class StructureChangeManager: ObservableObject, ChangeManaging {
         changeOrder.compactMap { pendingChanges[$0] }
     }
 
+    // MARK: - Save Hold
+
+    /// Takes the staged edits for a save, or nil when there are none or a save already holds them.
+    /// Taken before the save's first suspension, which is what refuses a second press.
+    func holdForSave() -> StructureSaveSnapshot? {
+        guard heldSave == nil, hasChanges else { return nil }
+        let snapshot = StructureSaveSnapshot(changes: getChangesArray())
+        heldSave = snapshot
+        return snapshot
+    }
+
+    /// Ends the hold a save took. A save that wrote clears the staged edits only while they are
+    /// still exactly the ones it read, so nothing it did not write is cleared, and a hold that has
+    /// already ended cannot clear what was staged after it. Returns whether the edits were cleared.
+    @discardableResult
+    func releaseHold(_ snapshot: StructureSaveSnapshot, written: Bool) -> Bool {
+        guard heldSave?.id == snapshot.id else { return false }
+        heldSave = nil
+        guard written, getChangesArray() == snapshot.changes else { return false }
+        discardChanges()
+        return true
+    }
+
     // MARK: - Undo/Redo Operations
 
     func undo() {
-        guard undoManager.canUndo else { return }
+        guard !isHeldForSave, undoManager.canUndo else { return }
         undoManager.undo()
     }
 
     func redo() {
-        guard undoManager.canRedo else { return }
+        guard !isHeldForSave, undoManager.canRedo else { return }
         undoManager.redo()
     }
 
@@ -866,4 +907,10 @@ enum SchemaUndoAction {
     case checkConstraintAdd(constraint: EditableCheckConstraintDefinition)
     case checkConstraintDelete(constraint: EditableCheckConstraintDefinition, at: Int?)
     case primaryKeyChange(old: [String], new: [String])
+}
+
+/// The staged edits a save read when it was pressed, and so the only edits it may clear.
+struct StructureSaveSnapshot: Equatable {
+    let id = UUID()
+    let changes: [SchemaChange]
 }

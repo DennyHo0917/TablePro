@@ -34,7 +34,7 @@ import TableProPluginKit
 /// fetch is the only version of this that keeps the edits.
 @MainActor
 internal final class StructureEditingSession: ObservableObject {
-    private static let logger = Logger(subsystem: "com.TablePro", category: "StructureEditingSession")
+    static let logger = Logger(subsystem: "com.TablePro", category: "StructureEditingSession")
 
     /// The scope and table this session was opened against. A tab retargeted to another table gets
     /// a new session rather than inheriting edits staged against the old one.
