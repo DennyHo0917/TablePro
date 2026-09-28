@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - No header sort, **Match any** or automatic row count on Cassandra and ScyllaDB tables.
 - Read-only CQL editor results on Cassandra and ScyllaDB.
 
+### Removed
+
+- Verify CA in the SSL mode picker for new Oracle connections on iPhone and iPad.
+
 ### Fixed
 
 - Endless reconnect attempts after a server started requiring TLS, stopped accepting it, or rejected the client certificate or key.
@@ -48,11 +52,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Copied connection URLs losing SSL Disabled.
 - ClickHouse certificate failures under Verify CA, or with a CA file, reported as a generic connection failure.
 - etcd rejecting a PEM CA certificate.
+- Teradata widening an unreadable CA file to the system trust store.
 
 ### Security
 
 - Trino password or access token sent in plain text when SSL Mode is Disabled.
 - Verify CA without a CA certificate accepting a certificate for any host on Trino, ClickHouse and etcd.
+- Verify CA without a CA certificate accepting a certificate for any host on Kafka, Oracle and Teradata.
 
 ## [0.76.0] - 2026-09-28
 

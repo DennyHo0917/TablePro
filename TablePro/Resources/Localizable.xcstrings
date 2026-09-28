@@ -176674,6 +176674,9 @@
         }
       }
     },
+    "Verify CA needs a CA certificate. Choose the CA certificate that signed the server's certificate." : {
+
+    },
     "Verify certificate and hostname" : {
       "localizations" : {
         "ko" : {
