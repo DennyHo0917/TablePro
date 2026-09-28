@@ -3,6 +3,141 @@
     <channel>
         <title>TablePro</title>
         <item>
+            <title>0.76.1</title>
+            <pubDate>Mon, 28 Sep 2026 22:46:49 +0000</pubDate>
+            <sparkle:fullReleaseNotesLink>https://docs.tablepro.app/changelog</sparkle:fullReleaseNotesLink>
+            <sparkle:phasedRolloutInterval>21600</sparkle:phasedRolloutInterval>
+            <sparkle:version>133</sparkle:version>
+            <sparkle:shortVersionString>0.76.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <description sparkle:format="markdown"><![CDATA[# What's New in TablePro 0.76.1
+
+### Changed
+
+- No header sort, **Match any** or automatic row count on Cassandra and ScyllaDB tables. (#3164 by @yordis)
+- Read-only CQL editor results on Cassandra and ScyllaDB. (#3164 by @yordis)
+
+### Fixed
+
+- Endless reconnects after a server began requiring TLS, dropped it, or rejected the client certificate or key. (#3170 by @datlechin)
+- Reconnect status showing "The connection stopped responding" instead of the certificate error behind it. (#3170 by @datlechin)
+- ClickHouse host lookup failures reported as a TLS hostname mismatch. (#3170 by @datlechin)
+- Trino on port 443, and ClickHouse on 443 or 8443, sending plain HTTP to an HTTPS port. (#3166, #3168 by @J2TeamNNL)
+- Verify modes refusing to save without a CA file on SQL Server, and Verify Identity on Trino and ClickHouse. (#3168 by @J2TeamNNL)
+- Trino certificate failures shown as "Query was cancelled", and PEM CA files rejected. (#3168 by @J2TeamNNL)
+- Raw HTML error pages in Trino connection errors. (#3168 by @J2TeamNNL)
+- ClickHouse Verify Identity ignoring the chosen CA certificate. (#3168 by @J2TeamNNL)
+- Missing "no TLS fallback" warning under Preferred for Trino. (#3168 by @J2TeamNNL)
+- Welcome window toolbar growing and captioning its search field after choosing Icon and Text. (#3146 by @shuvroroy)
+- Syntax error on opening, paging or filtering a Cassandra or ScyllaDB table. (#3164 by @yordis)
+- Save dropping edited numbers, dates, UUIDs and booleans on Cassandra and ScyllaDB while reporting success. (#3164 by @yordis)
+- `decimal` and `varint` values shown as hex, and `time` values cut to milliseconds, on Cassandra and ScyllaDB. (#3164 by @yordis)
+- User-defined types, tuples, `duration` and `vector` values shown garbled, empty or as hex on Cassandra and ScyllaDB. (#3164 by @yordis)
+- Deleting several Cassandra or ScyllaDB rows at once, or one row with a composite key, failing with a syntax error. (#3164 by @yordis)
+- **Add Row** silently replacing a Cassandra or ScyllaDB row that had the same primary key. (#3164 by @yordis)
+- Cassandra and ScyllaDB query results stopping at 100,000 rows without saying so. (#3164 by @yordis)
+- Cassandra Structure tab offering column and index edits that failed at Save. (#3164 by @yordis)
+- Functions, aggregates and triggers missing from the sidebar on ScyllaDB. (#3164 by @yordis)
+- Cassandra trigger and function source that failed when run as CQL. (#3164 by @yordis)
+- CQL `BATCH` split at its inner semicolons in the query editor and in SQL file import. (#3164 by @yordis)
+- A CQL column named `case` making the query editor run the next statement with its `CREATE TABLE`. (#3164 by @yordis)
+- Generic icons for ScyllaDB, libSQL, Teradata, Trino and Cloudflare R2 SQL in the iOS widget, and ScyllaDB in the app. (#3164 by @yordis)
+- SSL/TLS hint recommending settings for DataStax Astra, which does not connect. (#3164 by @yordis)
+- A result on a plugin-browsed engine taking the selected tab's table when it finished in another tab. (#3164 by @yordis)
+- Saves on engines whose plugin writes the rows running changes out of order after an edit was undone. (#3164 by @yordis)
+- Trino following a proxy's redirect, sending the query and password to another address or over plain HTTP. (#3168 by @J2TeamNNL)
+- Trino and etcd mutual TLS crashing on RSA PRIVATE KEY files, rejecting other keys, and copying them to the keychain. (#3168 by @J2TeamNNL)
+- `jdbc:` URLs rejected by Import from URL, and their `user` and `password` parameters ignored. (#3168 by @J2TeamNNL)
+- Imported Trino and ClickHouse URLs with `SSL=true` skipping certificate checks, and Trino's `SSLVerification` ignored. (#3168 by @J2TeamNNL)
+- Browser and `open` links ignoring the driver's default SSL mode, such as Preferred for PostgreSQL and MySQL. (#3168 by @J2TeamNNL)
+- Copied connection URLs losing SSL Disabled. (#3168 by @J2TeamNNL)
+- ClickHouse certificate failures under Verify CA, or with a CA file, reported as a generic connection failure. (#3168 by @J2TeamNNL)
+- etcd rejecting a PEM CA certificate. (#3168 by @J2TeamNNL)
+- Teradata widening an unreadable CA file to the system trust store. (#3171 by @datlechin)
+
+### Removed
+
+- Verify CA in the SSL mode picker for new Oracle connections on iPhone and iPad. (#3171 by @datlechin)
+
+### Security
+
+- Trino password or access token sent in plain text when SSL Mode is Disabled. (#3168 by @J2TeamNNL)
+- Verify CA without a CA certificate accepting a certificate for any host on Trino, ClickHouse and etcd. (#3168 by @J2TeamNNL)
+- Verify CA without a CA certificate accepting a certificate for any host on Kafka, Oracle and Teradata. (#3171 by @datlechin)
+
+[View full changelog](https://docs.tablepro.app/changelog)
+]]></description>
+            <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.76.1/TablePro-0.76.1-arm64.zip" length="31475263" type="application/octet-stream" sparkle:edSignature="lx2bZ8NLFCuVUCzi1gFCrclwdRvaD7OQa+B2wnegz2MNiWngf9EokzQIoXrxynw6U/564YFhwWPtqzE3zuw7DA=="/>
+        </item>
+        <item>
+            <title>0.76.1</title>
+            <pubDate>Mon, 28 Sep 2026 22:46:50 +0000</pubDate>
+            <sparkle:fullReleaseNotesLink>https://docs.tablepro.app/changelog</sparkle:fullReleaseNotesLink>
+            <sparkle:phasedRolloutInterval>21600</sparkle:phasedRolloutInterval>
+            <sparkle:version>133</sparkle:version>
+            <sparkle:shortVersionString>0.76.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[# What's New in TablePro 0.76.1
+
+### Changed
+
+- No header sort, **Match any** or automatic row count on Cassandra and ScyllaDB tables. (#3164 by @yordis)
+- Read-only CQL editor results on Cassandra and ScyllaDB. (#3164 by @yordis)
+
+### Fixed
+
+- Endless reconnects after a server began requiring TLS, dropped it, or rejected the client certificate or key. (#3170 by @datlechin)
+- Reconnect status showing "The connection stopped responding" instead of the certificate error behind it. (#3170 by @datlechin)
+- ClickHouse host lookup failures reported as a TLS hostname mismatch. (#3170 by @datlechin)
+- Trino on port 443, and ClickHouse on 443 or 8443, sending plain HTTP to an HTTPS port. (#3166, #3168 by @J2TeamNNL)
+- Verify modes refusing to save without a CA file on SQL Server, and Verify Identity on Trino and ClickHouse. (#3168 by @J2TeamNNL)
+- Trino certificate failures shown as "Query was cancelled", and PEM CA files rejected. (#3168 by @J2TeamNNL)
+- Raw HTML error pages in Trino connection errors. (#3168 by @J2TeamNNL)
+- ClickHouse Verify Identity ignoring the chosen CA certificate. (#3168 by @J2TeamNNL)
+- Missing "no TLS fallback" warning under Preferred for Trino. (#3168 by @J2TeamNNL)
+- Welcome window toolbar growing and captioning its search field after choosing Icon and Text. (#3146 by @shuvroroy)
+- Syntax error on opening, paging or filtering a Cassandra or ScyllaDB table. (#3164 by @yordis)
+- Save dropping edited numbers, dates, UUIDs and booleans on Cassandra and ScyllaDB while reporting success. (#3164 by @yordis)
+- `decimal` and `varint` values shown as hex, and `time` values cut to milliseconds, on Cassandra and ScyllaDB. (#3164 by @yordis)
+- User-defined types, tuples, `duration` and `vector` values shown garbled, empty or as hex on Cassandra and ScyllaDB. (#3164 by @yordis)
+- Deleting several Cassandra or ScyllaDB rows at once, or one row with a composite key, failing with a syntax error. (#3164 by @yordis)
+- **Add Row** silently replacing a Cassandra or ScyllaDB row that had the same primary key. (#3164 by @yordis)
+- Cassandra and ScyllaDB query results stopping at 100,000 rows without saying so. (#3164 by @yordis)
+- Cassandra Structure tab offering column and index edits that failed at Save. (#3164 by @yordis)
+- Functions, aggregates and triggers missing from the sidebar on ScyllaDB. (#3164 by @yordis)
+- Cassandra trigger and function source that failed when run as CQL. (#3164 by @yordis)
+- CQL `BATCH` split at its inner semicolons in the query editor and in SQL file import. (#3164 by @yordis)
+- A CQL column named `case` making the query editor run the next statement with its `CREATE TABLE`. (#3164 by @yordis)
+- Generic icons for ScyllaDB, libSQL, Teradata, Trino and Cloudflare R2 SQL in the iOS widget, and ScyllaDB in the app. (#3164 by @yordis)
+- SSL/TLS hint recommending settings for DataStax Astra, which does not connect. (#3164 by @yordis)
+- A result on a plugin-browsed engine taking the selected tab's table when it finished in another tab. (#3164 by @yordis)
+- Saves on engines whose plugin writes the rows running changes out of order after an edit was undone. (#3164 by @yordis)
+- Trino following a proxy's redirect, sending the query and password to another address or over plain HTTP. (#3168 by @J2TeamNNL)
+- Trino and etcd mutual TLS crashing on RSA PRIVATE KEY files, rejecting other keys, and copying them to the keychain. (#3168 by @J2TeamNNL)
+- `jdbc:` URLs rejected by Import from URL, and their `user` and `password` parameters ignored. (#3168 by @J2TeamNNL)
+- Imported Trino and ClickHouse URLs with `SSL=true` skipping certificate checks, and Trino's `SSLVerification` ignored. (#3168 by @J2TeamNNL)
+- Browser and `open` links ignoring the driver's default SSL mode, such as Preferred for PostgreSQL and MySQL. (#3168 by @J2TeamNNL)
+- Copied connection URLs losing SSL Disabled. (#3168 by @J2TeamNNL)
+- ClickHouse certificate failures under Verify CA, or with a CA file, reported as a generic connection failure. (#3168 by @J2TeamNNL)
+- etcd rejecting a PEM CA certificate. (#3168 by @J2TeamNNL)
+- Teradata widening an unreadable CA file to the system trust store. (#3171 by @datlechin)
+
+### Removed
+
+- Verify CA in the SSL mode picker for new Oracle connections on iPhone and iPad. (#3171 by @datlechin)
+
+### Security
+
+- Trino password or access token sent in plain text when SSL Mode is Disabled. (#3168 by @J2TeamNNL)
+- Verify CA without a CA certificate accepting a certificate for any host on Trino, ClickHouse and etcd. (#3168 by @J2TeamNNL)
+- Verify CA without a CA certificate accepting a certificate for any host on Kafka, Oracle and Teradata. (#3171 by @datlechin)
+
+[View full changelog](https://docs.tablepro.app/changelog)
+]]></description>
+            <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.76.1/TablePro-0.76.1-x86_64.zip" length="33766590" type="application/octet-stream" sparkle:edSignature="JG9SWtbYD7yPO7LWbDZLPqiR6HtHP0HOWFcoOi85x7jBU4JJSCw4N13siJhMNIuk6e9vQcxkFczKUUKzYEaKAA=="/>
+        </item>
+        <item>
             <title>0.76.0</title>
             <pubDate>Mon, 28 Sep 2026 09:14:47 +0000</pubDate>
             <sparkle:fullReleaseNotesLink>https://docs.tablepro.app/changelog</sparkle:fullReleaseNotesLink>
@@ -1187,189 +1322,6 @@ Find and Replace in the SQL editor, a Run button with more ways to run, and part
 </ul>
 ]]></description>
             <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.73.0/TablePro-0.73.0-x86_64.zip" length="30097365" type="application/octet-stream" sparkle:edSignature="IAfrhAhwvBf9IO2XhMimCMZXCSHRQoHJ+YJCjGR7Nh7QGPQ4SEyrlvJrIU9o+RNgQqlE6KKl/KCU554nsvyMDg=="/>
-        </item>
-        <item>
-            <title>0.72.0</title>
-            <pubDate>Thu, 03 Sep 2026 19:09:49 +0000</pubDate>
-            <sparkle:version>128</sparkle:version>
-            <sparkle:shortVersionString>0.72.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <description><![CDATA[<h3>Added</h3>
-<ul>
-<li>Types section in the sidebar for PostgreSQL enums, composites, domains and ranges, with enum label editing. (#2484)</li>
-<li>User-defined types in the structure editor's type picker. (#2484)</li>
-<li>`list_types` MCP tool.</li>
-<li>Value picker on a foreign key cell, listing rows from the referenced table with a label beside the key. (#2511)</li>
-<li>Breakdown of a query's time into server, first row and transfer, behind the toolbar's duration readout. (#2503)</li>
-<li>Exclude the AUTO_INCREMENT counter and Exclude DEFINER clauses in the SQL export, both on by default. (#2516)</li>
-<li>Jump to Column in the grid, a fuzzy search over the result's columns with their type and position. (#2495)</li>
-<li>Views, routines, triggers, user-defined types and privileges in the export tree, grouped by kind. (#2618)</li>
-<li>Per-table `WHERE`, row limit and column subset in the export tree. (#2618)</li>
-<li>Insert mode for SQL exports: skip, replace or update rows that already exist. (#2618)</li>
-<li>Split a SQL export into numbered parts at a chosen size. (#2618)</li>
-<li>Read every table at one snapshot during a SQL export. (#2618)</li>
-<li>Backup and restore for MySQL, MariaDB, MongoDB, SQLite and libSQL, using each engine's own tools. (#2618)</li>
-<li>Transfer To, copying table rows straight into another open connection with no file in between. (#2618)</li>
-<li>NDJSON layout for JSON exports, one row per line. (#2618)</li>
-<li>Saved export selections, reapplied from the export tree's bookmark menu. (#2618)</li>
-<li>Save Report on an import that skipped rows, listing each one's line and error as CSV. (#2618)</li>
-<li>Markdown, HTML and XML export. (#2618)</li>
-<li>Parquet export, through a plugin installed from Settings > Plugins. (#2618)</li>
-<li>XLSX import, reading the first worksheet of a workbook. (#2618)</li>
-<li>Server-Side Export for Oracle, Snowflake and BigQuery, unloading to a server directory, stage or bucket. (#2618)</li>
-<li>Backup and restore for SQL Server through SqlPackage. (#2618)</li>
-<li>MySQL events and PostgreSQL sequences in the export tree. (#2618)</li>
-<li>Connection groups in Switch Connection, with `Cmd`-click to open a saved connection in a new window. (#1311)</li>
-<li>AppleScript dictionary for connections, tabs, results and the grid selection. (#2512)</li>
-<li>AppleScript source in the history drawer's filter and its own notification toggle. (#2512)</li>
-</ul>
-<h3>Changed</h3>
-<ul>
-<li>Export, Transfer and Server-Side Export sheets resize, and the export object tree takes the extra room. (#2618)</li>
-<li>Cancel sits beside the action button in the export, transfer and server-side export footers.</li>
-<li>PluginKit ABI 21, additive: existing plugins keep loading.</li>
-<li>Query Insights ranks on the time the database spent rather than on elapsed time. (#2503)</li>
-<li>Export summary reports the warnings an export produced, instead of a bare "Export completed". (#2517)</li>
-</ul>
-<h3>Fixed</h3>
-<ul>
-<li>PostgreSQL identifier quoting in a SQL export of query results from any other engine. (#2630)</li>
-<li>Backslashes left unescaped in a SQL export of query results, silently altering the values.</li>
-<li>`DROP ... CASCADE` written for engines that reject it, SQLite and SQL Server among them.</li>
-<li>`DROP TABLE` naming the source table in a query-results export that writes no `CREATE TABLE`.</li>
-<li>Snowflake string literals escaped without their backslashes, in the editor and in exports.</li>
-<li>Restore Dump overwriting a database with no confirmation.</li>
-<li>Stopping an import applying at once, while stopping an export or a backup asks first.</li>
-<li>Progress bar stuck at zero and an "N/0 rows" label for the whole of a streaming query export.</li>
-<li>Checkboxes, pickers and text fields across the import and export sheets unnamed to VoiceOver.</li>
-<li>Import plugin options kept after cancelling the row importer, `Delete existing rows` among them.</li>
-<li>Escape not dismissing the export and import result alerts.</li>
-<li>A stopped import closing its progress sheet without saying what had already run.</li>
-<li>A failed restore leaving a partly-restored database without saying so.</li>
-<li>Oracle server-side export reported as written when the Data Pump job had only been started.</li>
-<li>Import stuck on a file that will not parse, with the parser's message as placeholder text.</li>
-<li>Backup save panel and password warning landing on whatever window was frontmost.</li>
-<li>DuckDB aggregate, JSON and Parquet functions failing on a Mac that cannot reach `extensions.duckdb.org`. (#2626)</li>
-<li>Last line of a helper process's output lost when it exits right after writing it.</li>
-<li>Structure and trigger edits committing or rolling back a transaction left open in a query tab on the same connection.</li>
-<li>Composite, range and extension-typed PostgreSQL columns labelled `ENUM(…)` in the structure editor.</li>
-<li>Columns of a PostgreSQL enum created during the session shown as text until the next reconnect.</li>
-<li>Sidebar routines, triggers and types from the previous database after switching while it was still loading.</li>
-<li>Silent fallback order when foreign keys between the exported tables form a cycle. (#2517)</li>
-<li>Foreign keys declared twice in a SQL export, or written as an `ALTER TABLE` the engine rejects. (#2517)</li>
-<li>Foreign keys missing from Redshift's reconstructed `CREATE TABLE`.</li>
-<li>New group discarded without a word when the connection form's picker could not save it. (#1311)</li>
-<li>Group created in one window missing from another until relaunch. (#1311)</li>
-<li>Wrong connection moved when dragging a list that holds a favorite or an active tag filter. (#1311)</li>
-<li>Crash opening the connection list after two Macs moved two groups inside each other. (#1311)</li>
-<li>Every saved group lost when one unreadable entry stopped the whole list decoding. (#1311)</li>
-<li>New tag discarded without a word when the name was already taken.</li>
-<li>Every saved tag replaced by the preset list when one unreadable entry stopped the library decoding.</li>
-<li>Tag created in one window missing from another until relaunch.</li>
-<li>Two Macs re-uploading the whole tag library to each other after a single tag changed.</li>
-<li>Connections, groups and tags from another device dropped for good when the store could not be written.</li>
-<li>Two Macs re-uploading the whole group list to each other after a single group changed. (#1311)</li>
-<li>Deleting a group that a broken sync left in a loop also deleting the group it pointed at. (#1311)</li>
-<li>"Operator does not exist" from a text filter on a PostgreSQL uuid, enum, number, date or json column.</li>
-<li>"Function lower does not exist" from an ignore-case filter on a PostgreSQL column that is not text.</li>
-<li>Is empty filter on a PostgreSQL array column.</li>
-<li>MongoDB collection named like a `db` method, such as `stats` or `version`, failing to open, save or export.</li>
-<li>Row count missing after a MongoDB raw filter written in shell syntax.</li>
-</ul>
-]]></description>
-            <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.72.0/TablePro-0.72.0-arm64.zip" length="27450274" type="application/octet-stream" sparkle:edSignature="Fq48QDuUkIMho3Om7blNy6isHGc9nSZGIGFEYnzguxGKpcL4sT2Fb4/ewtmOQyR0rTC/RatzfUaOaewAvfUYBg=="/>
-        </item>
-        <item>
-            <title>0.72.0</title>
-            <pubDate>Thu, 03 Sep 2026 19:09:50 +0000</pubDate>
-            <sparkle:version>128</sparkle:version>
-            <sparkle:shortVersionString>0.72.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<h3>Added</h3>
-<ul>
-<li>Types section in the sidebar for PostgreSQL enums, composites, domains and ranges, with enum label editing. (#2484)</li>
-<li>User-defined types in the structure editor's type picker. (#2484)</li>
-<li>`list_types` MCP tool.</li>
-<li>Value picker on a foreign key cell, listing rows from the referenced table with a label beside the key. (#2511)</li>
-<li>Breakdown of a query's time into server, first row and transfer, behind the toolbar's duration readout. (#2503)</li>
-<li>Exclude the AUTO_INCREMENT counter and Exclude DEFINER clauses in the SQL export, both on by default. (#2516)</li>
-<li>Jump to Column in the grid, a fuzzy search over the result's columns with their type and position. (#2495)</li>
-<li>Views, routines, triggers, user-defined types and privileges in the export tree, grouped by kind. (#2618)</li>
-<li>Per-table `WHERE`, row limit and column subset in the export tree. (#2618)</li>
-<li>Insert mode for SQL exports: skip, replace or update rows that already exist. (#2618)</li>
-<li>Split a SQL export into numbered parts at a chosen size. (#2618)</li>
-<li>Read every table at one snapshot during a SQL export. (#2618)</li>
-<li>Backup and restore for MySQL, MariaDB, MongoDB, SQLite and libSQL, using each engine's own tools. (#2618)</li>
-<li>Transfer To, copying table rows straight into another open connection with no file in between. (#2618)</li>
-<li>NDJSON layout for JSON exports, one row per line. (#2618)</li>
-<li>Saved export selections, reapplied from the export tree's bookmark menu. (#2618)</li>
-<li>Save Report on an import that skipped rows, listing each one's line and error as CSV. (#2618)</li>
-<li>Markdown, HTML and XML export. (#2618)</li>
-<li>Parquet export, through a plugin installed from Settings > Plugins. (#2618)</li>
-<li>XLSX import, reading the first worksheet of a workbook. (#2618)</li>
-<li>Server-Side Export for Oracle, Snowflake and BigQuery, unloading to a server directory, stage or bucket. (#2618)</li>
-<li>Backup and restore for SQL Server through SqlPackage. (#2618)</li>
-<li>MySQL events and PostgreSQL sequences in the export tree. (#2618)</li>
-<li>Connection groups in Switch Connection, with `Cmd`-click to open a saved connection in a new window. (#1311)</li>
-<li>AppleScript dictionary for connections, tabs, results and the grid selection. (#2512)</li>
-<li>AppleScript source in the history drawer's filter and its own notification toggle. (#2512)</li>
-</ul>
-<h3>Changed</h3>
-<ul>
-<li>Export, Transfer and Server-Side Export sheets resize, and the export object tree takes the extra room. (#2618)</li>
-<li>Cancel sits beside the action button in the export, transfer and server-side export footers.</li>
-<li>PluginKit ABI 21, additive: existing plugins keep loading.</li>
-<li>Query Insights ranks on the time the database spent rather than on elapsed time. (#2503)</li>
-<li>Export summary reports the warnings an export produced, instead of a bare "Export completed". (#2517)</li>
-</ul>
-<h3>Fixed</h3>
-<ul>
-<li>PostgreSQL identifier quoting in a SQL export of query results from any other engine. (#2630)</li>
-<li>Backslashes left unescaped in a SQL export of query results, silently altering the values.</li>
-<li>`DROP ... CASCADE` written for engines that reject it, SQLite and SQL Server among them.</li>
-<li>`DROP TABLE` naming the source table in a query-results export that writes no `CREATE TABLE`.</li>
-<li>Snowflake string literals escaped without their backslashes, in the editor and in exports.</li>
-<li>Restore Dump overwriting a database with no confirmation.</li>
-<li>Stopping an import applying at once, while stopping an export or a backup asks first.</li>
-<li>Progress bar stuck at zero and an "N/0 rows" label for the whole of a streaming query export.</li>
-<li>Checkboxes, pickers and text fields across the import and export sheets unnamed to VoiceOver.</li>
-<li>Import plugin options kept after cancelling the row importer, `Delete existing rows` among them.</li>
-<li>Escape not dismissing the export and import result alerts.</li>
-<li>A stopped import closing its progress sheet without saying what had already run.</li>
-<li>A failed restore leaving a partly-restored database without saying so.</li>
-<li>Oracle server-side export reported as written when the Data Pump job had only been started.</li>
-<li>Import stuck on a file that will not parse, with the parser's message as placeholder text.</li>
-<li>Backup save panel and password warning landing on whatever window was frontmost.</li>
-<li>DuckDB aggregate, JSON and Parquet functions failing on a Mac that cannot reach `extensions.duckdb.org`. (#2626)</li>
-<li>Last line of a helper process's output lost when it exits right after writing it.</li>
-<li>Structure and trigger edits committing or rolling back a transaction left open in a query tab on the same connection.</li>
-<li>Composite, range and extension-typed PostgreSQL columns labelled `ENUM(…)` in the structure editor.</li>
-<li>Columns of a PostgreSQL enum created during the session shown as text until the next reconnect.</li>
-<li>Sidebar routines, triggers and types from the previous database after switching while it was still loading.</li>
-<li>Silent fallback order when foreign keys between the exported tables form a cycle. (#2517)</li>
-<li>Foreign keys declared twice in a SQL export, or written as an `ALTER TABLE` the engine rejects. (#2517)</li>
-<li>Foreign keys missing from Redshift's reconstructed `CREATE TABLE`.</li>
-<li>New group discarded without a word when the connection form's picker could not save it. (#1311)</li>
-<li>Group created in one window missing from another until relaunch. (#1311)</li>
-<li>Wrong connection moved when dragging a list that holds a favorite or an active tag filter. (#1311)</li>
-<li>Crash opening the connection list after two Macs moved two groups inside each other. (#1311)</li>
-<li>Every saved group lost when one unreadable entry stopped the whole list decoding. (#1311)</li>
-<li>New tag discarded without a word when the name was already taken.</li>
-<li>Every saved tag replaced by the preset list when one unreadable entry stopped the library decoding.</li>
-<li>Tag created in one window missing from another until relaunch.</li>
-<li>Two Macs re-uploading the whole tag library to each other after a single tag changed.</li>
-<li>Connections, groups and tags from another device dropped for good when the store could not be written.</li>
-<li>Two Macs re-uploading the whole group list to each other after a single group changed. (#1311)</li>
-<li>Deleting a group that a broken sync left in a loop also deleting the group it pointed at. (#1311)</li>
-<li>"Operator does not exist" from a text filter on a PostgreSQL uuid, enum, number, date or json column.</li>
-<li>"Function lower does not exist" from an ignore-case filter on a PostgreSQL column that is not text.</li>
-<li>Is empty filter on a PostgreSQL array column.</li>
-<li>MongoDB collection named like a `db` method, such as `stats` or `version`, failing to open, save or export.</li>
-<li>Row count missing after a MongoDB raw filter written in shell syntax.</li>
-</ul>
-]]></description>
-            <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.72.0/TablePro-0.72.0-x86_64.zip" length="29320260" type="application/octet-stream" sparkle:edSignature="IZAUi46v1vxI65lL4KcTlmmsKGcY79MYpFDYMPFHdovXyCv2Bjgz7mitvKexGv75+5VD0o6/enFnodz/lrhMCA=="/>
         </item>
     </channel>
 </rss>
