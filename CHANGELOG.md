@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Endless reconnect attempts after a server started requiring TLS, stopped accepting it, or rejected the client certificate or key.
+- Reconnect status showing "The connection stopped responding" instead of the certificate error behind it.
+- ClickHouse host lookup failures reported as a TLS hostname mismatch.
 - Trino on port 443, and ClickHouse on 443 or 8443, sending plain HTTP to an HTTPS port. (#3166)
 - Verify modes refusing to save without a CA file on SQL Server, and Verify Identity on Trino and ClickHouse.
 - Trino certificate failures shown as "Query was cancelled", and PEM CA files rejected.
