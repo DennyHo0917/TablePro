@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- No header sort, **Match any** or automatic row count on Cassandra and ScyllaDB tables.
+- Read-only CQL editor results on Cassandra and ScyllaDB.
+
 ### Fixed
 
 - Endless reconnect attempts after a server started requiring TLS, stopped accepting it, or rejected the client certificate or key.
@@ -19,6 +24,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ClickHouse Verify Identity ignoring the chosen CA certificate.
 - Missing "no TLS fallback" warning under Preferred for Trino.
 - Welcome window toolbar growing and captioning its search field after choosing Icon and Text.
+- Syntax error on opening, paging or filtering a Cassandra or ScyllaDB table.
+- Save dropping edited numbers, dates, UUIDs and booleans on Cassandra and ScyllaDB while reporting success.
+- `decimal` and `varint` values shown as hex, and `time` values cut to milliseconds, on Cassandra and ScyllaDB.
+- User-defined types, tuples, `duration` and `vector` values shown garbled, empty or as hex on Cassandra and ScyllaDB.
+- Deleting several Cassandra or ScyllaDB rows at once, or one row with a composite key, failing with a syntax error.
+- **Add Row** silently replacing a Cassandra or ScyllaDB row that had the same primary key.
+- Cassandra and ScyllaDB query results stopping at 100,000 rows without saying so.
+- Cassandra Structure tab offering column and index edits that failed at Save.
+- Functions, aggregates and triggers missing from the sidebar on ScyllaDB.
+- Cassandra trigger and function source that failed when run as CQL.
+- CQL `BATCH` split at its inner semicolons in the query editor and in SQL file import.
+- A CQL column named `case` making the query editor run the next statement with its `CREATE TABLE`.
+- Generic icon for ScyllaDB, libSQL, Teradata, Trino and Cloudflare R2 SQL in the iOS widget, and for ScyllaDB in the iOS app.
+- SSL/TLS hint recommending settings for DataStax Astra, which does not connect.
+- A result on a plugin-browsed engine taking the selected tab's table when it finished in another tab.
+- Saves on engines whose plugin writes the rows running changes out of order after an edit was undone.
 - Trino following a proxy's redirect, sending the query and password to another address or over plain HTTP.
 - Trino and etcd mutual TLS crashing on an RSA PRIVATE KEY file, rejecting other keys, and copying them to the login keychain.
 - `jdbc:` URLs rejected by Import from URL, and their `user` and `password` parameters ignored.

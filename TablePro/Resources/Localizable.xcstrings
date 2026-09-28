@@ -453,6 +453,9 @@
         }
       }
     },
+    "\"%1$@\" is not a valid %2$@ value." : {
+
+    },
     "--" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -11929,6 +11932,9 @@
     "A %@ index has no equivalent on this engine." : {
 
     },
+    "A %@ value cannot be written from the grid. Use the CQL editor." : {
+
+    },
     "A built-in plugin \"%@\" already provides this bundle ID" : {
       "localizations" : {
         "ko" : {
@@ -11996,6 +12002,9 @@
           }
         }
       }
+    },
+    "A column added to a Cassandra table cannot join its primary key." : {
+
     },
     "A column left out of the comparison is still written on insert and update. A filter and a row limit read only the rows they select, on both sides." : {
 
@@ -12761,6 +12770,9 @@
           }
         }
       }
+    },
+    "A row with this primary key already exists. Edit that row instead." : {
+
     },
     "A run is already in progress." : {
       "localizations" : {
@@ -24322,6 +24334,15 @@
         }
       }
     },
+    "Cassandra cannot change the primary key column %@. Delete the row and add it again with the new key." : {
+
+    },
+    "Cassandra columns have no comment." : {
+
+    },
+    "Cassandra has no NOT NULL constraint." : {
+
+    },
     "backslash" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -27809,6 +27830,18 @@
         }
       }
     },
+    "Cassandra cannot filter rows with %@." : {
+
+    },
+    "Cassandra columns have no default value." : {
+
+    },
+    "Cassandra filters cannot match any one of several conditions. Use Match All." : {
+
+    },
+    "Cassandra orders rows only by clustering columns within one partition, so a table cannot be sorted by a column." : {
+
+    },
     "caret" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -28644,6 +28677,9 @@
           }
         }
       }
+    },
+    "Change a Cassandra column's name or type in the CQL editor. CQL renames only primary key columns and changes no column's type." : {
+
     },
     "Change…" : {
 
@@ -44822,6 +44858,9 @@
         }
       }
     },
+    "Create and drop Cassandra indexes in the CQL editor." : {
+
+    },
     "Create connection..." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -59879,6 +59918,12 @@
     "Enter Credentials Here" : {
 
     },
+    "Enter at least one value to filter with IN." : {
+
+    },
+    "Enter both bounds to filter with BETWEEN." : {
+
+    },
     "Enter database name" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -59947,6 +59992,9 @@
           }
         }
       }
+    },
+    "Enter a value for the primary key column %@." : {
+
     },
     "Enter table name" : {
       "localizations" : {
@@ -162096,6 +162144,9 @@
     "The table needs at least one column with a name and a type." : {
 
     },
+    "The table's primary key is not loaded, so the row cannot be written." : {
+
+    },
     "the target" : {
       "localizations" : {
         "ko" : {
@@ -184542,6 +184593,9 @@
 
     },
     "Editing a document needs MongoDB 4.0 or later." : {
+
+    },
+    "The row's primary key is not loaded, so the row cannot be found." : {
 
     },
     "This is a view, so its documents cannot be edited. Edit them in the collection the view reads." : {
