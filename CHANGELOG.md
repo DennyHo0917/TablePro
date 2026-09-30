@@ -45,6 +45,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `EXPLAIN ANALYSE` treated as a plain `EXPLAIN` that does not run its statement.
 - Safe Mode level lost when importing a connection file from Mac to iOS or from iOS to Mac.
 - Undo and Redo in a tab with unsaved edits replaying another tab's changes against the wrong rows.
+- Client certificate and key dropped by SSH, Cloudflare, SOCKS, Tunnel Command and Cloud SQL tunnels.
+- SOCKS proxy dialing the hidden Host instead of the first host-list entry.
+- "SSH password rejected" shown for a Password-auth SSH tunnel with no saved password.
+- Literal backticks in cloudflared, cloud-sql-proxy, SSH config, remote command and dump tool install messages.
+- Tunnel command preview showing port 0 or the wrong host when Port is blank or the connection uses a host list.
+- SSH tab host-list warning naming replica set failover for Redis and Kafka, and implying Sentinel works through a tunnel.
 
 ## [0.76.1] - 2026-09-29
 
