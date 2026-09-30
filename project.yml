@@ -1506,6 +1506,9 @@ targets:
     templateAttributes:
       folder: SurrealDBDriverPlugin
       principalClass: SurrealDBPlugin
+    dependencies:
+      - package: TableProCore
+        product: TableProNumberFormatting
 
   TeradataDriver:
     templates: [DriverPlugin]
