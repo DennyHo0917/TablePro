@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Explain Analyze running write statements on Read-Only connections and skipping the Alert and Safe Mode confirmation.
 - Remote deletions of connections, groups, tags, SSH profiles and table favorites applied with their sync category off.
 - **Local only** connections taking edits and deletions made on another device.
+- Export dialog offering a SQL row scope on MongoDB, Redis and other engines without SQL.
+- CSV, XLSX and MQL exports ignoring a table's row filter, row limit and column choice.
+- MQL export rounding 64-bit integers past 2^53 and restoring whole doubles and small 64-bit integers as 32-bit ones.
+- XLSX export writing duplicate sheet names that Excel only opens after a repair.
 - Oracle, Snowflake and Dameng `NUMBER` rounded or left empty, and `DECIMAL` losing digits, in Parquet exports.
 - Oracle `BINARY_FLOAT` and `BINARY_DOUBLE` columns written as text in Parquet exports.
 - PostgreSQL `money` values written as null in Parquet exports.
