@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - SAP HANA database driver plugin. (#1966)
 - Shift JIS, EUC-JP, GB 18030, Big5, EUC-KR and UTF-16 options for CSV and SQL import.
 
+### Changed
+
+- Clipboard URL banner for every scheme Import from URL accepts, `+ssh` URLs included.
+
 ### Fixed
 
 - Save disabled for Kafka connections set to Verify Identity without a CA file.
@@ -45,6 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `EXPLAIN ANALYSE` treated as a plain `EXPLAIN` that does not run its statement.
 - Safe Mode level lost when importing a connection file from Mac to iOS or from iOS to Mac.
 - Undo and Redo in a tab with unsaved edits replaying another tab's changes against the wrong rows.
+- Clipboard URL banner turning `sslmode=verify-full` or `verify-ca` into Required and ignoring `sslmode=disable`.
+- Import from URL ignoring `ssl=1`, `ssl=require` and `ssl=0`.
 - Registry plugins refused as needing a newer TablePro on releases the registry still publishes binaries for.
 - Release highlights in the update dialog run together into one paragraph.
 - Removed and Deprecated listed after Fixed in GitHub release notes.
