@@ -443,7 +443,10 @@ targets:
       - Plugins/CSVExportPlugin/CSVExportOptionsView.swift
       - Plugins/CSVExportPlugin/CSVExportPlugin.swift
       - Plugins/CSVImportPlugin/CSVImportOptions.swift
+      - Plugins/CSVImportPlugin/CSVImportOptionsView.swift
       - Plugins/CSVImportPlugin/CSVImportParsing.swift
+      - Plugins/CSVImportPlugin/CSVImportPlugin.swift
+      - Plugins/CSVImportPlugin/CSVImportText.swift
       - Plugins/ClickHouseDriverPlugin/ClickHouseCapabilities.swift
       - Plugins/ClickHouseDriverPlugin/ClickHouseCredentials.swift
       - Plugins/ClickHouseDriverPlugin/ClickHouseGeneratedColumnClassification.swift
@@ -1153,6 +1156,9 @@ targets:
     templateAttributes:
       folder: CSVImportPlugin
       principalClass: CSVImportPlugin
+    dependencies:
+      - package: TableProCore
+        product: TableProTabularIO
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.TablePro.CSVImportPlugin
