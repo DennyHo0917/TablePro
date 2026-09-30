@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Explain Analyze running write statements on Read-Only connections and skipping the Alert and Safe Mode confirmation.
 - Remote deletions of connections, groups, tags, SSH profiles and table favorites applied with their sync category off.
 - **Local only** connections taking edits and deletions made on another device.
+- Filter-bar BETWEEN refused on Typesense and Weaviate, and given the wrong lower bound on BigQuery.
+- Cassandra filter error telling MCP clients to use a Match All control they do not have.
 - Japanese, Chinese and Korean text in CSV, TSV and SQL files opening as garbled characters.
 - Every row of a UTF-16 data file rewritten on save.
 - Latin-1 and Windows-1252 SQL dumps importing double-encoded text through their own `SET NAMES`.
