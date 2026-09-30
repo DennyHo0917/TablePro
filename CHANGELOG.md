@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Explain Analyze running write statements on Read-Only connections and skipping the Alert and Safe Mode confirmation.
 - Remote deletions of connections, groups, tags, SSH profiles and table favorites applied with their sync category off.
 - **Local only** connections taking edits and deletions made on another device.
+- Redis Cluster through a tunnel failing to connect with advice to set Connection Mode to Cluster.
+- Redis `SCAN` typed in a query tab showing one page of keys with no next cursor to continue from.
 - etcd `lease revoke`, `auth disable` and user or role deletion skipping confirmation, and list commands gated as writes.
 - Mac Alert (Full), Safe Mode and Safe Mode (Full) levels dropped to Alert by any edit to the connection on iOS.
 - `pg_terminate_backend`, `nextval` and other state-changing calls treated as reads by Safe Mode and external clients.
