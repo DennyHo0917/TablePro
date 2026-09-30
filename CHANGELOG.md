@@ -45,6 +45,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `EXPLAIN ANALYSE` treated as a plain `EXPLAIN` that does not run its statement.
 - Safe Mode level lost when importing a connection file from Mac to iOS or from iOS to Mac.
 - Undo and Redo in a tab with unsaved edits replaying another tab's changes against the wrong rows.
+- PostgreSQL 18 virtual generated columns written without their expression in Show DDL, Copy DDL and SQL export.
+- Empty Check Constraints tab and no check constraints in MCP `describe_table` on CockroachDB.
+- Connect errors a server answered through PGlite, such as a missing database, reported as an unreachable socket server.
+- REINDEX VERBOSE offered on PostgreSQL 9.1 to 9.4, where it fails, and ignored when reindexing a whole database.
+- PGlite saying it cannot change the order of a table's columns.
+- `Use ~/.pgpass` toggle named `Use Password File` on Redshift and CockroachDB.
 - etcd `(root)` Delete and Truncate erasing the whole Key Prefix Root, and a root with no trailing `/` reaching sibling keys.
 - etcd commands and saved edits reaching a different key when the key starts with a combining mark.
 - Elasticsearch, Typesense and SurrealDB table exports cutting arrays and objects over 10,000 characters into unreadable JSON.
