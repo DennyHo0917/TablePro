@@ -9866,6 +9866,9 @@
         }
       }
     },
+    "'%@' cannot be saved from the grid. SurrealDB ignores it on a relation, so delete the relation and RELATE it again. Otherwise, UPDATE it in the editor." : {
+
+    },
     "•" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -12727,6 +12730,12 @@
       }
     },
     "A quote or parenthesis in this filter is not closed." : {
+
+    },
+    "A raw SurrealDB filter must be one condition that only reads. Run anything else in the SurrealQL editor." : {
+
+    },
+    "A record's id cannot be edited." : {
 
     },
     "A row with this key already exists" : {
@@ -106617,6 +106626,9 @@
 
     },
     "SAP's in-memory SQL database" : {
+
+    },
+    "SurrealDB cannot filter rows with %@." : {
 
     },
     "TLS Server Name" : {
