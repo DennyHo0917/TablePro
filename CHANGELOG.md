@@ -100,6 +100,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+- Plaintext passwords saved with the query tab that Open in Query Editor opens from Users & Roles.
 - Redis Verify Identity accepting a server certificate issued for another host.
 
 ## [0.76.1] - 2026-09-29
