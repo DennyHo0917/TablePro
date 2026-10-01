@@ -543,10 +543,14 @@ targets:
       - Plugins/ParquetExportPlugin/ParquetExportModels.swift
       - Plugins/ParquetExportPlugin/ParquetTableFiles.swift
       - Plugins/ParquetExportPlugin/ParquetTypeMapper.swift
+      - Plugins/JSONImportPlugin/JSONFieldDetectionCache.swift
+      - Plugins/JSONImportPlugin/JSONFieldSurvey.swift
       - Plugins/JSONImportPlugin/JSONImportOptions.swift
       - Plugins/JSONImportPlugin/JSONImportOptionsView.swift
       - Plugins/JSONImportPlugin/JSONImportParsing.swift
       - Plugins/JSONImportPlugin/JSONImportPlugin.swift
+      - Plugins/JSONImportPlugin/JSONLineBatches.swift
+      - Plugins/JSONImportPlugin/JSONLineReader.swift
       - Plugins/MSSQLDriverPlugin/MSSQLObjectQueries.swift
       - Plugins/MSSQLDriverPlugin/MSSQLTypeQueries.swift
       - Plugins/MSSQLDriverPlugin/MSSQLTypeDefinition.swift

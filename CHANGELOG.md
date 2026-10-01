@@ -76,6 +76,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Undo and Redo in a tab with unsaved edits replaying another tab's changes against the wrong rows.
 - Import sheet creating, emptying or filling tables in another database after a database switch in another window.
 - Import sheet discarding a new table's column edits when a CSV or Excel option changes.
+- JSON import leaving out fields first seen after row 200, and typing columns from those rows alone.
+- No fields found in a JSON Lines file with CRLF line endings.
+- JSON Lines rows with U+2028, U+2029 or U+0085 in a string failing to import, and invalid UTF-8 imported as U+FFFD.
+- JSON Lines import stalling while GitHub Copilot is enabled.
 - App pausing while renaming or dropping a database or schema that holds many favorite tables.
 - iCloud sync mixing up two favorite tables whose names contain a vertical bar.
 - iCloud sync sending both a save and a deletion for an item unstarred and starred again, or renamed back, before it ran.
