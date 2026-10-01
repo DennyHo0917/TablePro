@@ -74,6 +74,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `EXPLAIN ANALYSE` treated as a plain `EXPLAIN` that does not run its statement.
 - Safe Mode level lost when importing a connection file from Mac to iOS or from iOS to Mac.
 - Undo and Redo in a tab with unsaved edits replaying another tab's changes against the wrong rows.
+- App pausing while renaming or dropping a database or schema that holds many favorite tables.
+- iCloud sync mixing up two favorite tables whose names contain a vertical bar.
+- iCloud sync sending both a save and a deletion for an item unstarred and starred again, or renamed back, before it ran.
+- Favorite table starred again while its removal was syncing to iCloud disappearing when the sync finished.
+- Table favorites, saved queries and column layouts of **Local only** connections syncing to iCloud.
+- Database favorites and column layouts removed on another Mac staying on this one.
 - Table Transfer emptying a destination table, then failing, when two source columns map to one column.
 - MongoDB, Elasticsearch, Typesense and SurrealDB saving a long array or object shortened for display as the cut text.
 - MongoDB refusing text like `[DRAFT] Chapter one...` as a value shortened for display.
