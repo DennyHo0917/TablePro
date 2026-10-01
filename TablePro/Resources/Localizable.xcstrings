@@ -32676,6 +32676,9 @@
         }
       }
     },
+    "ClickHouse returned HTTP %lld." : {
+
+    },
     "Client" : {
       "localizations" : {
         "ko" : {
