@@ -125,11 +125,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Copy To on a foreign table, sequence, system table or external table preselecting every object in the schema.
 - Copy To between two schemas of one DuckDB or PGlite connection refused with a message about comparing databases.
 - iPhone and iPad reading a Safe Mode level they do not recognize from iCloud as Off.
+- Linked Folder and Team Library connections never asking for a password and failing to sign in.
+- Old Team Catalog entry left beside the new one after a renamed connection is published again.
+- Team Catalog folder panel sending teammates to a Settings > Linked Folders pane that does not exist.
+- Empty Team Library after joining a team or activating a Team license, until the next relaunch.
+- **Publish to Team Library…** sharing connections with the whole team without asking first.
 
 ### Security
 
 - Plaintext passwords saved with the query tab that Open in Query Editor opens from Users & Roles.
 - Redis Verify Identity accepting a server certificate issued for another host.
+- Pre-connect script and other local-only settings sent in TablePro links, connection exports and the Team Library.
 
 ## [0.76.1] - 2026-09-29
 
