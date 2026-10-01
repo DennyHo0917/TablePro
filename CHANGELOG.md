@@ -74,6 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `EXPLAIN ANALYSE` treated as a plain `EXPLAIN` that does not run its statement.
 - Safe Mode level lost when importing a connection file from Mac to iOS or from iOS to Mac.
 - Undo and Redo in a tab with unsaved edits replaying another tab's changes against the wrong rows.
+- Import sheet creating, emptying or filling tables in another database after a database switch in another window.
+- Import sheet discarding a new table's column edits when a CSV or Excel option changes.
 - App pausing while renaming or dropping a database or schema that holds many favorite tables.
 - iCloud sync mixing up two favorite tables whose names contain a vertical bar.
 - iCloud sync sending both a save and a deletion for an item unstarred and starred again, or renamed back, before it ran.
