@@ -14,8 +14,18 @@ extension ClickHousePluginDriver {
         lock.withLock { acceptedExecutionTimeLimit }
     }
 
-    func executeRaw(_ query: String, queryId: String? = nil) async throws -> CHQueryResult {
-        try await sendStatement(query, queryId: queryId, params: nil, executionTimeLimit: executionTimeLimit)
+    func executeRaw(
+        _ query: String,
+        queryId: String? = nil,
+        requestTimeout: TimeInterval? = nil
+    ) async throws -> CHQueryResult {
+        try await sendStatement(
+            query,
+            queryId: queryId,
+            params: nil,
+            executionTimeLimit: executionTimeLimit,
+            requestTimeout: requestTimeout
+        )
     }
 
     func executeRawWithParams(_ query: String, params: [String: String?], queryId: String? = nil) async throws -> CHQueryResult {
@@ -26,7 +36,8 @@ extension ClickHousePluginDriver {
         _ query: String,
         queryId: String?,
         params: [String: String?]?,
-        executionTimeLimit: Int?
+        executionTimeLimit: Int?,
+        requestTimeout: TimeInterval? = nil
     ) async throws -> CHQueryResult {
         let (session, database) = try lock.withLock { () throws -> (URLSession, String) in
             guard let session = self.session else { throw ClickHouseError.notConnected }
@@ -44,7 +55,7 @@ extension ClickHousePluginDriver {
             params: params,
             executionTimeLimit: executionTimeLimit
         )
-        request.timeoutInterval = _queryTimeout.requestTimeoutInterval
+        request.timeoutInterval = requestTimeout ?? _queryTimeout.requestTimeoutInterval
         return try await perform(request: request, session: session)
     }
 

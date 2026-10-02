@@ -128,6 +128,37 @@ struct IOSConnectionExportServiceTests {
         #expect(ssh.authMethod == "SSH Agent")
     }
 
+    @Test("Timeout overrides export explicitly and keep unrelated fields")
+    func exportKeepsTimeoutOverrides() throws {
+        let state = makeState(secureStore: MockSecureStore())
+        var connection = DatabaseConnection(
+            name: "Prod",
+            type: .postgresql,
+            queryTimeoutSeconds: 0,
+            additionalFields: ["schema": "public"]
+        )
+        connection.connectTimeoutSeconds = 12
+
+        let exported = try #require(IOSConnectionExportService.buildEnvelope([connection], appState: state).connections.first)
+
+        #expect(exported.connectTimeoutSeconds == 12)
+        #expect(exported.queryTimeoutSeconds == 0)
+        #expect(exported.additionalFields == ["schema": "public"])
+    }
+
+    @Test("Export drops a query timeout unsafe for millisecond APIs")
+    func exportDropsUnsafeQueryTimeout() throws {
+        let state = makeState(secureStore: MockSecureStore())
+        var connection = DatabaseConnection(name: "Prod", type: .postgresql)
+        connection.queryTimeoutSeconds = DatabaseConnection.queryTimeoutSecondsRange.upperBound + 1
+
+        let exported = try #require(
+            IOSConnectionExportService.buildEnvelope([connection], appState: state).connections.first
+        )
+
+        #expect(exported.queryTimeoutSeconds == nil)
+    }
+
     @Test("An export leaves out the fields every importer drops and keeps the rest")
     func exportLeavesOutImportBlockedFields() throws {
         let state = makeState(secureStore: MockSecureStore())

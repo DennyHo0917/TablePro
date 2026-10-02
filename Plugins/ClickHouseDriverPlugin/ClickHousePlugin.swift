@@ -246,9 +246,17 @@ final class ClickHousePluginDriver: PluginDatabaseDriver, @unchecked Sendable {
 
     func connect(reportingStage report: @escaping ConnectionStageReporter) async throws {
         let tlsDelegate = try ClickHouseTLSDelegate.make(for: config.ssl)
+        let connectTimeout = PluginConnectTimeout.milliseconds(
+            in: config.additionalFields,
+            default: Int(HttpQueryTimeout().requestTimeoutInterval * 1_000)
+        )
+        let deadline = PluginConnectDeadline(milliseconds: connectTimeout)
 
         let urlConfig = URLSessionConfiguration.default
-        urlConfig.timeoutIntervalForRequest = HttpQueryTimeout.sessionBootstrapRequestTimeout
+        urlConfig.timeoutIntervalForRequest = max(
+            HttpQueryTimeout.sessionBootstrapRequestTimeout,
+            deadline.remainingSeconds()
+        )
         urlConfig.timeoutIntervalForResource = HttpQueryTimeout.sessionResourceTimeout
 
         lock.withLock {
@@ -260,7 +268,7 @@ final class ClickHousePluginDriver: PluginDatabaseDriver, @unchecked Sendable {
         }
 
         do {
-            _ = try await executeRaw("SELECT 1")
+            _ = try await executeRaw("SELECT 1", requestTimeout: deadline.remainingSeconds())
         } catch {
             lock.withLock {
                 session?.invalidateAndCancel()
@@ -271,7 +279,7 @@ final class ClickHousePluginDriver: PluginDatabaseDriver, @unchecked Sendable {
         }
 
         report(.preparingSession)
-        if let result = try? await executeRaw("SELECT version()"),
+        if let result = try? await executeRaw("SELECT version()", requestTimeout: deadline.remainingSeconds()),
            let versionStr = result.rows.first?.first?.asText {
             _serverVersion = versionStr
         }
