@@ -28768,6 +28768,9 @@
         }
       }
     },
+    "CHECK expression as the engine reports it" : {
+
+    },
     "Changed since the save" : {
       "localizations" : {
         "ko" : {
@@ -36148,6 +36151,9 @@
         }
       }
     },
+    "Columns the constraint reads, when the engine reports them" : {
+
+    },
     "Columns to select. Omit for all." : {
       "localizations" : {
         "ko" : {
@@ -36355,6 +36361,9 @@
           }
         }
       }
+    },
+    "Comma-separated tables whose columns the prompt includes, up to %1$d. The first %1$d by name when omitted" : {
+
     },
     "Comma-separated values. Compatible with Excel and most tools." : {
       "localizations" : {
@@ -67734,6 +67743,9 @@
           }
         }
       }
+    },
+    "False for a constraint the engine has not checked against existing rows" : {
+
     },
     "false" : {
       "localizations" : {
@@ -154664,6 +154676,9 @@
         }
       }
     },
+    "Table-level CHECK constraints" : {
+
+    },
     "Table Type" : {
 
     },
@@ -164937,6 +164952,12 @@
       }
     },
     "This engine holds %1$lld digits, not %2$lld, so the extra ones are lost." : {
+
+    },
+    "This engine offers only mode 'cancel' for stopping a session." : {
+
+    },
+    "This engine offers only mode 'kill' for stopping a session." : {
 
     },
     "This file cannot be saved in that format." : {
@@ -184606,6 +184627,9 @@
 
     },
     "'%@' is document metadata and cannot be edited." : {
+
+    },
+    "'%@' is not a process id on this engine. Take one from get_server_dashboard." : {
 
     },
     "The document's _id is unknown, so it cannot be addressed." : {

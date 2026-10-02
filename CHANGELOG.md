@@ -136,6 +136,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Copy To on a foreign table, sequence, system table or external table preselecting every object in the schema.
 - Copy To between two schemas of one DuckDB or PGlite connection refused with a message about comparing databases.
 - iPhone and iPad reading a Safe Mode level they do not recognize from iCloud as Off.
+- MCP `describe_table` results rejected by clients that check them against the tool's output schema.
+- MCP `export_data` writing numbers and booleans as strings in JSON and SQL output, and binary values as base64 text.
+- MCP `focus_query_tab` reporting a tab focused while its window stayed on another tab or connection.
+- MCP `browse_table` ignoring a sort on a column the table does not have and returning unsorted rows.
+- MCP `stop_server_session` blaming the engine for a mistyped process id, or for cancel on SQL Server and ClickHouse.
+- MCP `question_to_sql` prompt promising every table but describing only the first six and telling the model to stop.
+- Compare missing DuckDB rows keyed by a binary column and writing DuckDB binary values as text in sync scripts.
 - Linked Folder and Team Library connections never asking for a password and failing to sign in.
 - Old Team Catalog entry left beside the new one after a renamed connection is published again.
 - Team Catalog folder panel sending teammates to a Settings > Linked Folders pane that does not exist.
