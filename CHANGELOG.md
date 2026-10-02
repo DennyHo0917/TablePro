@@ -7,174 +7,179 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.77.0] - 2026-10-02
+
+SAP HANA connections, with the driver installed from Settings > Plugins.
+Folders for tables and views in the sidebar, synced between Macs over iCloud.
+Imports that remember each table's column mapping, and connect and query timeouts per connection.
+
 ### Added
 
-- SAP HANA database driver plugin. (#1966)
-- Column mappings remembered per table for CSV, JSON and Excel imports, plus Match by Name and Match by Position. (#3172)
-- Folders for tables and views in the sidebar. (#3167)
-- iCloud sync for table folders between Macs.
-- Shift JIS, EUC-JP, GB 18030, Big5, EUC-KR and UTF-16 options for CSV and SQL import.
-- Per-connection connect and query timeout controls in connection Options. (#2525)
+- SAP HANA database driver plugin. (#1966, #3169 by @J2TeamNNL)
+- Column mappings remembered per table for CSV, JSON and Excel imports, plus Match by Name and Match by Position. (#3172, #3183)
+- Folders for tables and views in the sidebar, synced between Macs over iCloud. (#3167, #3189, #3226)
+- Shift JIS, EUC-JP, GB 18030, Big5, EUC-KR and UTF-16 options for CSV and SQL import. (#3192)
+- Per-connection connect and query timeout controls in connection Options. (#2525, #3230)
 
 ### Changed
 
-- Clipboard URL banner for every scheme Import from URL accepts, `+ssh` URLs included.
+- Clipboard URL banner for every scheme Import from URL accepts, `+ssh` URLs included. (#3207)
 
 ### Fixed
 
-- Copy as UPDATE and INSERT including identity, computed and generated columns, which SQL Server refuses with "Cannot update identity column". (#3219)
-- Copy as UPDATE matching a composite primary key on its first column only, and matching unsaved edits instead of the stored row.
-- Copy as UPDATE and INSERT leaving out the table's schema.
-- Edits and pasted rows staged before a table's structure loaded writing identity and computed columns on save.
-- SQL Server `rowversion` and system-versioned period columns offered for editing, and Add Row failing on a table that has one.
-- SQL Server identity and computed columns not recognized in a table or schema whose name contains a dot.
-- Saves failing on a SQL Server table without a primary key that has an `ntext`, `text`, `xml` or `image` column.
-- A value typed into a new SQL Server row dropped when a same-named table in another schema has an identity column of that name.
-- Set Value > Default on SQL Server and Oracle storing the text `__DEFAULT__`.
-- New Snowflake, Teradata and Trino rows storing `__DEFAULT__` in columns left to their default.
-- Oracle identity and virtual columns offered for editing, and Add Row failing on a table that has one.
-- Restore Previous Values bringing a deleted SQL Server or PostgreSQL row back under a new identity key.
-- iOS row editor and Add Row writing SQL Server identity and computed columns.
-- Save disabled for Kafka connections set to Verify Identity without a CA file.
-- Crash on `inf` or `nan`, text like `007` stored as a number, and blobs stored as text on remote libSQL.
-- External Clients level and Cloudflare, Cloud SQL, SOCKS and Tunnel Command settings reset by an iCloud sync.
-- iOS row editor saving the placeholder of a long text or binary value over the full value.
-- Explain Analyze running write statements on Read-Only connections and skipping the Alert and Safe Mode confirmation.
-- Remote deletions of connections, groups, tags, SSH profiles and table favorites applied with their sync category off.
-- **Local only** connections taking edits and deletions made on another device.
-- Saved filters, layout, favorite and Recent entry kept by a table dropped or renamed from a query tab or MCP client.
-- Column header sort on Redis, etcd and Kafka re-running the last command with `ORDER BY` appended.
-- Import sheet ignoring a CSV or Excel option change until the next edit, then resetting the column mapping.
-- Import sheet showing an earlier table's columns after switching tables while the first was still loading.
-- CSV and JSON imports failing on every row, or writing a skipped field, when two fields differ only by case.
-- CSV and Excel imports reading a column under the wrong header when headers repeat or a blank one comes first.
-- Import sheet's Try Again for an existing table discarding the column edits made for a new table.
-- Favorites tab missing starred tables from other schemas, and every starred table on Oracle, Snowflake, BigQuery and Trino.
-- etcd SSL Mode that the driver ignored, and etcd URLs that lost or faked TLS on import and Copy as URL.
-- Export dialog offering a SQL row scope on MongoDB, Redis and other engines without SQL.
-- CSV, XLSX and MQL exports ignoring a table's row filter, row limit and column choice.
-- MQL export rounding 64-bit integers past 2^53 and restoring whole doubles and small 64-bit integers as 32-bit ones.
-- XLSX export writing duplicate sheet names that Excel only opens after a repair.
-- Oracle, Snowflake and Dameng `NUMBER` rounded or left empty, and `DECIMAL` losing digits, in Parquet exports.
-- Oracle `BINARY_FLOAT` and `BINARY_DOUBLE` columns written as text in Parquet exports.
-- PostgreSQL `money` values written as null in Parquet exports.
-- Files left behind when a multi-table Parquet export is stopped between tables.
-- Filter-bar BETWEEN refused on Typesense and Weaviate, and given the wrong lower bound on BigQuery.
-- SurrealDB between, matches regex, is empty and raw filters run as equality, and is not empty showing only empty rows.
-- SurrealDB edits to `in` and `out` dropped without a word when the same row had another edit.
-- Cassandra filter error telling MCP clients to use a Match All control they do not have.
-- Japanese, Chinese and Korean text in CSV, TSV and SQL files opening as garbled characters.
-- Every row of a UTF-16 data file rewritten on save.
-- Latin-1 and Windows-1252 SQL dumps importing double-encoded text through their own `SET NAMES`.
-- Data file window stuck on an error after reloading it with the wrong encoding.
-- Encoding chosen in File Properties lost when another app changes the file.
-- No columns found for a JSON Lines file over 256 KB with non-ASCII text.
-- VoiceOver reading the data file status bar's delimiter and encoding as only "File format".
-- CSV import writing bytes it could not read into the table as Latin-1 text.
-- Data file window picking up another app's in-place writes on HFS+ and exFAT volumes.
-- Wrong row number and blank-looking characters in the data file save error for text the encoding cannot store.
-- Yen sign failing to save in Shift JIS and EUC-JP data files and SQL files.
-- CSV import with single quotes merging rows at a double quote inside a field.
-- Binary values in Latin-1 and Windows-1252 SQL dumps imported as different bytes.
-- Shortcuts rejecting CSV and JSON files that are not UTF-8.
-- Shortcuts Add Row and Add Rows rejecting CSV with CRLF or CR line endings as having no data.
-- iOS Info tab showing a DuckDB connection as a server at 127.0.0.1:3306 instead of its file.
-- iOS `SELECT * FROM` template writing `LIMIT 100` on SQL Server, Oracle and Redis, and leaving out the selected schema.
-- iOS keeping the query history of deleted connections, and the passwords of connections deleted on another device.
-- iOS history list showing a repeated query twice until the connection is reopened.
-- Redis Cluster through a tunnel failing to connect with advice to set Connection Mode to Cluster.
-- Redis `SCAN` typed in a query tab showing one page of keys with no next cursor to continue from.
-- etcd `lease revoke`, `auth disable` and user or role deletion skipping confirmation, and list commands gated as writes.
-- Mac Alert (Full), Safe Mode and Safe Mode (Full) levels dropped to Alert by any edit to the connection on iOS.
-- `pg_terminate_backend`, `nextval` and other state-changing calls treated as reads by Safe Mode and external clients.
-- `EXPLAIN ANALYSE` treated as a plain `EXPLAIN` that does not run its statement.
-- Safe Mode level lost when importing a connection file from Mac to iOS or from iOS to Mac.
-- Undo and Redo in a tab with unsaved edits replaying another tab's changes against the wrong rows.
-- Import sheet creating, emptying or filling tables in another database after a database switch in another window.
-- Import sheet discarding a new table's column edits when a CSV or Excel option changes.
-- JSON import leaving out fields first seen after row 200, and typing columns from those rows alone.
-- No fields found in a JSON Lines file with CRLF line endings.
-- JSON Lines rows with U+2028, U+2029 or U+0085 in a string failing to import, and invalid UTF-8 imported as U+FFFD.
-- JSON Lines import stalling while GitHub Copilot is enabled.
-- App pausing while renaming or dropping a database or schema that holds many favorite tables.
-- iCloud sync mixing up two favorite tables whose names contain a vertical bar.
-- iCloud sync sending both a save and a deletion for an item unstarred and starred again, or renamed back, before it ran.
-- Favorite table starred again while its removal was syncing to iCloud disappearing when the sync finished.
-- Table favorites, saved queries and column layouts of **Local only** connections syncing to iCloud.
-- Database favorites and column layouts removed on another Mac staying on this one.
-- Table Transfer emptying a destination table, then failing, when two source columns map to one column.
-- MongoDB, Elasticsearch, Typesense and SurrealDB saving a long array or object shortened for display as the cut text.
-- MongoDB refusing text like `[DRAFT] Chapter one...` as a value shortened for display.
-- Clipboard URL banner turning `sslmode=verify-full` or `verify-ca` into Required and ignoring `sslmode=disable`.
-- Import from URL ignoring `ssl=1`, `ssl=require` and `ssl=0`.
-- Registry plugins refused as needing a newer TablePro on releases the registry still publishes binaries for.
-- Query timeout overrides dropped by Mac sync and connection exports. (#2525)
-- Connection checks interrupting a query, import or export still in progress after five minutes. (#2525)
-- Connection timeout errors naming the database when an SSH bastion stalled. (#2525)
-- In-flight connection attempts restoring an edited connection's previous server, name, tags or Safe Mode. (#2525)
-- Local libSQL writes reporting success after a lock wait reached its query timeout. (#2525)
-- Failed remote SQLite refreshes mixing a new WAL or journal with the previous cached database. (#2525)
-- Remote SQLite snapshots left on the server after a connection timeout. (#2525)
-- Release highlights in the update dialog run together into one paragraph.
-- Removed and Deprecated listed after Fixed in GitHub release notes.
-- PostgreSQL 18 virtual generated columns written without their expression in Show DDL, Copy DDL and SQL export.
-- Empty Check Constraints tab and no check constraints in MCP `describe_table` on CockroachDB.
-- Connect errors a server answered through PGlite, such as a missing database, reported as an unreachable socket server.
-- REINDEX VERBOSE offered on PostgreSQL 9.1 to 9.4, where it fails, and ignored when reindexing a whole database.
-- PGlite saying it cannot change the order of a table's columns.
-- `Use ~/.pgpass` toggle named `Use Password File` on Redshift and CockroachDB.
-- etcd `(root)` Delete and Truncate erasing the whole Key Prefix Root, and a root with no trailing `/` reaching sibling keys.
-- etcd commands and saved edits reaching a different key when the key starts with a combining mark.
-- etcd Value edits and key renames detaching the key's lease.
-- etcd filters failing with "Unknown command: select" on columns other than Key, and Key filters ignored for most operators or OR.
-- etcd Key contains and starts with filters also matching keys whose value holds the text.
-- etcd commands with a flag before the key, such as `del --prefix /app`, failing with "requires a key".
-- Blank etcd TLS Mode on a new connection, its untranslated Disabled option, and a Verify CA error naming Advanced fields.
-- Elasticsearch, Typesense and SurrealDB table exports cutting arrays and objects over 10,000 characters into unreadable JSON.
-- Server dashboard Slow Queries panel failing on every refresh on SQL Server.
-- Server dashboard sessions, slow queries, connection count and active query count failing on Redshift.
-- Missing Terminate button on ClickHouse server dashboard sessions that MCP could terminate.
-- SQLite server dashboard showing Cache Size as "-2000 pages".
-- Untranslatable "% used" on the Typesense server dashboard.
-- SQL Server and ClickHouse server dashboards listing their own monitoring session.
-- Client certificate and key dropped by SSH, Cloudflare, SOCKS, Tunnel Command and Cloud SQL tunnels.
-- SOCKS proxy dialing the hidden Host instead of the first host-list entry.
-- "SSH password rejected" shown for a Password-auth SSH tunnel with no saved password.
-- Literal backticks in cloudflared, cloud-sql-proxy, SSH config, remote command and dump tool install messages.
-- Tunnel command preview showing port 0 or the wrong host when Port is blank or the connection uses a host list.
-- SSH tab host-list warning naming replica set failover for Redis and Kafka, and implying Sentinel works through a tunnel.
-- Weaviate exports failing after the first 10,000 objects of a collection.
-- Weaviate Raw Filter row sent as a filter on a property named `__RAW__`.
-- MongoDB restore into a database with a different name restoring nothing and reporting success.
-- MongoDB Backup Dump and Restore ignoring the connection's Auth Database, Hosts list, SRV and TLS options.
-- Restore confirmation claiming existing objects are overwritten on PostgreSQL, MongoDB, SQLite, SQL Server and DuckDB.
-- MongoDB exports dropping fields first seen after the 200th document, and exporting a field null in the first 200 as text.
-- ClickHouse query timeout never reaching the server, and capped SELECTs failing at 60 seconds whatever it is set to.
-- Stop on a ClickHouse SELECT leaving the query running on the server.
-- ClickHouse connect errors such as a wrong password or unknown database shown as "Failed to establish connection".
-- ClickHouse client certificate and key never sent to servers that require mutual TLS.
-- Row limit on Copy To and scoped exports failing with a syntax error on SQL Server, Oracle and Teradata.
-- Copy To on a foreign table, sequence, system table or external table preselecting every object in the schema.
-- Copy To between two schemas of one DuckDB or PGlite connection refused with a message about comparing databases.
-- iPhone and iPad reading a Safe Mode level they do not recognize from iCloud as Off.
-- MCP `describe_table` results rejected by clients that check them against the tool's output schema.
-- MCP `export_data` writing numbers and booleans as strings in JSON and SQL output, and binary values as base64 text.
-- MCP `focus_query_tab` reporting a tab focused while its window stayed on another tab or connection.
-- MCP `browse_table` ignoring a sort on a column the table does not have and returning unsorted rows.
-- MCP `stop_server_session` blaming the engine for a mistyped process id, or for cancel on SQL Server and ClickHouse.
-- MCP `question_to_sql` prompt promising every table but describing only the first six and telling the model to stop.
-- Compare missing DuckDB rows keyed by a binary column and writing DuckDB binary values as text in sync scripts.
-- Linked Folder and Team Library connections never asking for a password and failing to sign in.
-- Old Team Catalog entry left beside the new one after a renamed connection is published again.
-- Team Catalog folder panel sending teammates to a Settings > Linked Folders pane that does not exist.
-- Empty Team Library after joining a team or activating a Team license, until the next relaunch.
-- **Publish to Team Library…** sharing connections with the whole team without asking first.
+- Copy as UPDATE and INSERT including identity, computed and generated columns, which SQL Server refuses. (#3219, #3231)
+- Copy as UPDATE matching a composite key on its first column only, or on unsaved edits instead of the stored row. (#3231)
+- Copy as UPDATE and INSERT leaving out the table's schema. (#3231)
+- Edits and pasted rows staged before a table's structure loaded writing identity and computed columns on save. (#3231)
+- SQL Server `rowversion` and system-versioned period columns editable, and Add Row failing on a table with one. (#3231)
+- SQL Server identity and computed columns not recognized in a table or schema whose name contains a dot. (#3231)
+- Saves failing on a SQL Server table without a primary key that has an `ntext`, `text`, `xml` or `image` column. (#3231)
+- New SQL Server row dropping a value when a same-named table in another schema has an identity column of that name. (#3231)
+- Set Value > Default on SQL Server and Oracle storing the text `__DEFAULT__`. (#3231)
+- New Snowflake, Teradata and Trino rows storing `__DEFAULT__` in columns left to their default. (#3231)
+- Oracle identity and virtual columns offered for editing, and Add Row failing on a table that has one. (#3231)
+- Restore Previous Values bringing a deleted SQL Server or PostgreSQL row back under a new identity key. (#3231)
+- iOS row editor and Add Row writing SQL Server identity and computed columns. (#3231)
+- Save disabled for Kafka connections set to Verify Identity without a CA file. (#3169 by @J2TeamNNL)
+- Crash on `inf` or `nan`, text like `007` stored as a number, and blobs stored as text on remote libSQL. (#3174)
+- External Clients level and Cloudflare, Cloud SQL, SOCKS and Tunnel Command settings reset by an iCloud sync. (#3175)
+- iOS row editor saving the placeholder of a long text or binary value over the full value. (#3177)
+- Explain Analyze running write statements on Read-Only connections and skipping the Alert and Safe Mode confirmation. (#3176)
+- Remote deletions of connections, groups, tags, SSH profiles and table favorites applied with their sync category off. (#3179)
+- **Local only** connections taking edits and deletions made on another device. (#3178)
+- Saved filters, layout, favorite and Recent entry kept by a table dropped or renamed from a query tab or MCP client. (#3196)
+- Column header sort on Redis, etcd and Kafka re-running the last command with `ORDER BY` appended. (#3182)
+- Import sheet ignoring a CSV or Excel option change until the next edit, then resetting the column mapping. (#3183)
+- Import sheet showing an earlier table's columns after switching tables while the first was still loading. (#3183)
+- CSV and JSON imports failing on every row, or writing a skipped field, when two fields differ only by case. (#3183)
+- CSV and Excel imports reading a column under the wrong header when headers repeat or a blank one comes first. (#3183)
+- Import sheet's Try Again for an existing table discarding the column edits made for a new table. (#3183)
+- Favorites tab missing tables starred in other schemas, and all of them on Oracle, Snowflake, BigQuery and Trino. (#3200)
+- etcd SSL Mode that the driver ignored, and etcd URLs that lost or faked TLS on import and Copy as URL. (#3186)
+- Export dialog offering a SQL row scope on MongoDB, Redis and other engines without SQL. (#3197)
+- CSV, XLSX and MQL exports ignoring a table's row filter, row limit and column choice. (#3197)
+- MQL export rounding 64-bit integers past 2^53 and restoring whole doubles and small 64-bit integers as 32-bit ones. (#3197)
+- XLSX export writing duplicate sheet names that Excel only opens after a repair. (#3197)
+- Oracle, Snowflake and Dameng `NUMBER` rounded or left empty, and `DECIMAL` losing digits, in Parquet exports. (#3195)
+- Oracle `BINARY_FLOAT` and `BINARY_DOUBLE` columns written as text in Parquet exports. (#3195)
+- PostgreSQL `money` values written as null in Parquet exports. (#3195)
+- Files left behind when a multi-table Parquet export is stopped between tables. (#3195)
+- Filter-bar BETWEEN refused on Typesense and Weaviate, and given the wrong lower bound on BigQuery. (#3193)
+- SurrealDB between, matches regex, is empty and raw filters run as equality, and is not empty showing only empty rows. (#3218)
+- SurrealDB edits to `in` and `out` dropped without a word when the same row had another edit. (#3218)
+- Cassandra filter error telling MCP clients to use a Match All control they do not have. (#3193)
+- Japanese, Chinese and Korean text in CSV, TSV and SQL files opening as garbled characters. (#3192)
+- Every row of a UTF-16 data file rewritten on save. (#3192)
+- Latin-1 and Windows-1252 SQL dumps importing double-encoded text through their own `SET NAMES`. (#3192)
+- Data file window stuck on an error after reloading it with the wrong encoding. (#3192)
+- Encoding chosen in File Properties lost when another app changes the file. (#3192)
+- No columns found for a JSON Lines file over 256 KB with non-ASCII text. (#3192)
+- VoiceOver reading the data file status bar's delimiter and encoding as only "File format". (#3192)
+- CSV import writing bytes it could not read into the table as Latin-1 text. (#3192)
+- Data file window picking up another app's in-place writes on HFS+ and exFAT volumes. (#3192)
+- Wrong row number and blank-looking characters in the data file save error for text the encoding cannot store. (#3192)
+- Yen sign failing to save in Shift JIS and EUC-JP data files and SQL files. (#3192)
+- CSV import with single quotes merging rows at a double quote inside a field. (#3192)
+- Binary values in Latin-1 and Windows-1252 SQL dumps imported as different bytes. (#3192)
+- Shortcuts rejecting CSV and JSON files that are not UTF-8. (#3192)
+- Shortcuts Add Row and Add Rows rejecting CSV with CRLF or CR line endings as having no data. (#3224)
+- iOS Info tab showing a DuckDB connection as a server at 127.0.0.1:3306 instead of its file. (#3224)
+- iOS `SELECT * FROM` template writing `LIMIT 100` on SQL Server, Oracle and Redis, and leaving out the selected schema. (#3224)
+- iOS keeping the query history of deleted connections, and the passwords of connections deleted on another device. (#3224)
+- iOS history list showing a repeated query twice until the connection is reopened. (#3224)
+- Redis Cluster through a tunnel failing to connect with advice to set Connection Mode to Cluster. (#3190)
+- Redis `SCAN` typed in a query tab showing one page of keys with no next cursor to continue from. (#3190)
+- etcd `lease revoke`, `auth disable` and user or role deletes skipping confirmation, and list commands gated as writes. (#3188)
+- Mac Alert (Full), Safe Mode and Safe Mode (Full) levels dropped to Alert by any edit to the connection on iOS. (#3181)
+- `pg_terminate_backend`, `nextval` and other state-changing calls treated as reads by Safe Mode and external clients. (#3184)
+- `EXPLAIN ANALYSE` treated as a plain `EXPLAIN` that does not run its statement. (#3184)
+- Safe Mode level lost when importing a connection file from Mac to iOS or from iOS to Mac. (#3185)
+- Undo and Redo in a tab with unsaved edits replaying another tab's changes against the wrong rows. (#3180)
+- Import sheet creating, emptying or filling tables in another database after a database switch in another window. (#3191)
+- Import sheet discarding a new table's column edits when a CSV or Excel option changes. (#3191)
+- JSON import leaving out fields first seen after row 200, and typing columns from those rows alone. (#3194)
+- No fields found in a JSON Lines file with CRLF line endings. (#3194)
+- JSON Lines rows with U+2028, U+2029 or U+0085 in a string failing to import, and invalid UTF-8 imported as U+FFFD. (#3194)
+- JSON Lines import stalling while GitHub Copilot is enabled. (#3194)
+- App pausing while renaming or dropping a database or schema that holds many favorite tables. (#3201)
+- iCloud sync mixing up two favorite tables whose names contain a vertical bar. (#3201)
+- iCloud sync sending a save and a deletion for an item starred again or renamed back before the sync ran. (#3201)
+- Favorite table starred again while its removal was syncing to iCloud disappearing when the sync finished. (#3201)
+- Table favorites, saved queries and column layouts of **Local only** connections syncing to iCloud. (#3201)
+- Database favorites and column layouts removed on another Mac staying on this one. (#3201)
+- Table Transfer emptying a destination table, then failing, when two source columns map to one column. (#3183)
+- MongoDB, Elasticsearch, Typesense and SurrealDB saving a long array or object shortened for display as the cut text. (#3208)
+- MongoDB refusing text like `[DRAFT] Chapter one...` as a value shortened for display. (#3208)
+- Clipboard URL banner turning `sslmode=verify-full` or `verify-ca` into Required and ignoring `sslmode=disable`. (#3207)
+- Import from URL ignoring `ssl=1`, `ssl=require` and `ssl=0`. (#3207)
+- Registry plugins refused as needing a newer TablePro on releases the registry still publishes binaries for. (#3202)
+- Query timeout overrides dropped by Mac sync and connection exports. (#2525, #3230)
+- Connection checks interrupting a query, import or export still in progress after five minutes. (#2525, #3230)
+- Connection timeout errors naming the database when an SSH bastion stalled. (#2525, #3230)
+- In-flight connection attempts restoring an edited connection's previous server, name, tags or Safe Mode. (#2525, #3230)
+- Local libSQL writes reporting success after a lock wait reached its query timeout. (#2525, #3230)
+- Failed remote SQLite refreshes mixing a new WAL or journal with the previous cached database. (#2525, #3230)
+- Remote SQLite snapshots left on the server after a connection timeout. (#2525, #3230)
+- Release highlights in the update dialog run together into one paragraph. (#3202)
+- Removed and Deprecated listed after Fixed in GitHub release notes. (#3202)
+- PostgreSQL 18 virtual generated columns written without their expression in Show DDL, Copy DDL and SQL export. (#3199)
+- Empty Check Constraints tab and no check constraints in MCP `describe_table` on CockroachDB. (#3199)
+- Connect errors a server answered through PGlite, such as a missing database, reported as an unreachable socket server. (#3199)
+- REINDEX VERBOSE offered on PostgreSQL 9.1 to 9.4, where it fails, and ignored when reindexing a whole database. (#3199)
+- PGlite saying it cannot change the order of a table's columns. (#3199)
+- `Use ~/.pgpass` toggle named `Use Password File` on Redshift and CockroachDB. (#3199)
+- etcd Delete and Truncate on `(root)` erasing the whole Key Prefix Root, or sibling keys when it has no trailing `/`. (#3204)
+- etcd commands and saved edits reaching a different key when the key starts with a combining mark. (#3204)
+- etcd Value edits and key renames detaching the key's lease. (#3229)
+- etcd non-Key filters failing with "Unknown command: select", and Key filters ignoring most operators and OR. (#3229)
+- etcd Key contains and starts with filters also matching keys whose value holds the text. (#3229)
+- etcd commands with a flag before the key, such as `del --prefix /app`, failing with "requires a key". (#3229)
+- Blank etcd TLS Mode on new connections, an untranslated Disabled option, and a Verify CA error naming Advanced fields. (#3229)
+- Elasticsearch, Typesense and SurrealDB exports cutting arrays and objects over 10,000 characters into broken JSON. (#3205)
+- Server dashboard Slow Queries panel failing on every refresh on SQL Server. (#3203)
+- Server dashboard sessions, slow queries, connection count and active query count failing on Redshift. (#3203)
+- Missing Terminate button on ClickHouse server dashboard sessions that MCP could terminate. (#3203)
+- SQLite server dashboard showing Cache Size as "-2000 pages". (#3203)
+- Untranslatable "% used" on the Typesense server dashboard. (#3203)
+- SQL Server and ClickHouse server dashboards listing their own monitoring session. (#3203)
+- Client certificate and key dropped by SSH, Cloudflare, SOCKS, Tunnel Command and Cloud SQL tunnels. (#3198)
+- SOCKS proxy dialing the hidden Host instead of the first host-list entry. (#3198)
+- "SSH password rejected" shown for a Password-auth SSH tunnel with no saved password. (#3198)
+- Literal backticks in cloudflared, cloud-sql-proxy, SSH config, remote command and dump tool install messages. (#3198)
+- Tunnel command preview showing port 0 or the wrong host when Port is blank or the connection uses a host list. (#3198)
+- SSH tab host-list warning citing replica set failover for Redis and Kafka, and implying Sentinel works over a tunnel. (#3198)
+- Weaviate exports failing after the first 10,000 objects of a collection. (#3217)
+- Weaviate Raw Filter row sent as a filter on a property named `__RAW__`. (#3217)
+- MongoDB restore into a database with a different name restoring nothing and reporting success. (#3222)
+- MongoDB Backup Dump and Restore ignoring the connection's Auth Database, Hosts list, SRV and TLS options. (#3222)
+- Restore confirmation claiming existing objects are overwritten on PostgreSQL, MongoDB, SQLite, SQL Server and DuckDB. (#3222)
+- MongoDB exports dropping fields first seen after document 200, and typing a field null in the first 200 as text. (#3213)
+- ClickHouse query timeout never reaching the server, and capped SELECTs failing at 60 seconds whatever it is set to. (#3223)
+- Stop on a ClickHouse SELECT leaving the query running on the server. (#3223)
+- ClickHouse connect errors such as a wrong password or unknown database shown as "Failed to establish connection". (#3223)
+- ClickHouse client certificate and key never sent to servers that require mutual TLS. (#3223)
+- Row limit on Copy To and scoped exports failing with a syntax error on SQL Server, Oracle and Teradata. (#3220)
+- Copy To on a foreign table, sequence, system table or external table preselecting every object in the schema. (#3220)
+- Copy To between two schemas of one DuckDB or PGlite connection refused with a message about comparing databases. (#3220)
+- iPhone and iPad reading a Safe Mode level they do not recognize from iCloud as Off. (#3214)
+- MCP `describe_table` results rejected by clients that check them against the tool's output schema. (#3228)
+- MCP `export_data` writing numbers and booleans as strings in JSON and SQL output, and binary values as base64 text. (#3228)
+- MCP `focus_query_tab` reporting a tab focused while its window stayed on another tab or connection. (#3228)
+- MCP `browse_table` ignoring a sort on a column the table does not have and returning unsorted rows. (#3228)
+- MCP `stop_server_session` blaming the engine for a mistyped process id, or for cancel on SQL Server and ClickHouse. (#3228)
+- MCP `question_to_sql` prompt promising every table but describing only the first six and telling the model to stop. (#3228)
+- Compare missing DuckDB rows keyed by a binary column and writing DuckDB binary values as text in sync scripts. (#3228)
+- Linked Folder and Team Library connections never asking for a password and failing to sign in. (#3227)
+- Old Team Catalog entry left beside the new one after a renamed connection is published again. (#3227)
+- Team Catalog folder panel sending teammates to a Settings > Linked Folders pane that does not exist. (#3227)
+- Empty Team Library after joining a team or activating a Team license, until the next relaunch. (#3227)
+- **Publish to Team Library…** sharing connections with the whole team without asking first. (#3227)
 
 ### Security
 
-- Plaintext passwords saved with the query tab that Open in Query Editor opens from Users & Roles.
-- Redis Verify Identity accepting a server certificate issued for another host.
-- Pre-connect script and other local-only settings sent in TablePro links, connection exports and the Team Library.
+- Plaintext passwords saved with the query tab that Open in Query Editor opens from Users & Roles. (#3212)
+- Redis Verify Identity accepting a server certificate issued for another host. (#3206)
+- Pre-connect script and other local-only settings sent in TablePro links, connection exports and the Team Library. (#3227)
 
 ## [0.76.1] - 2026-09-29
 
@@ -5382,7 +5387,8 @@ TablePro is a native macOS database client built with SwiftUI and AppKit, design
     - Custom SQL query templates
     - Performance optimized for large datasets
 
-[Unreleased]: https://github.com/TableProApp/TablePro/compare/v0.76.1...HEAD
+[Unreleased]: https://github.com/TableProApp/TablePro/compare/v0.77.0...HEAD
+[0.77.0]: https://github.com/TableProApp/TablePro/compare/v0.76.1...v0.77.0
 [0.76.1]: https://github.com/TableProApp/TablePro/compare/v0.76.0...v0.76.1
 [0.76.0]: https://github.com/TableProApp/TablePro/compare/v0.75.0...v0.76.0
 [0.75.0]: https://github.com/TableProApp/TablePro/compare/v0.74.0...v0.75.0

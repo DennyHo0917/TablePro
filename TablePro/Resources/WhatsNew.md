@@ -1,3 +1,7 @@
-# TablePro 0.76.1
+# TablePro 0.77.0
 
-This release is fixes and refinements. Every entry is in the changelog.
+SAP HANA connections, with the driver installed from Settings > Plugins.
+
+Folders for tables and views in the sidebar, synced between Macs over iCloud.
+
+Imports that remember each table's column mapping, and connect and query timeouts per connection.
