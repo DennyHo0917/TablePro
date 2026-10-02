@@ -106661,6 +106661,12 @@
     "The SAP HANA schema name cannot be empty." : {
 
     },
+    "The server fills in %@, so it cannot be given a value." : {
+
+    },
+    "This table has no primary key, and %@ cannot be compared to find the row." : {
+
+    },
     "Value %1$lld, \"%2$@\", could not be converted for SAP HANA." : {
 
     },
