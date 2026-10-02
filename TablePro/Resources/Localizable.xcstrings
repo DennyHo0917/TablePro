@@ -6600,6 +6600,9 @@
     "%@ are invalid, so queries skip them and exports leave them out. Drop them, or rebuild them with REINDEX." : {
 
     },
+    "%@ can only be compared with a whole number." : {
+
+    },
     "%@ cannot be scripted with its indexes, because the target's index statements would name a different schema than its definition." : {
 
     },
@@ -9867,6 +9870,7 @@
       }
     },
     "'%@' cannot be saved from the grid. SurrealDB ignores it on a relation, so delete the relation and RELATE it again. Otherwise, UPDATE it in the editor." : {
+    "'%@' is not a valid regular expression." : {
 
     },
     "•" : {
@@ -59512,6 +59516,7 @@
         }
       }
     },
+    "Enter at least one value to filter with %@." : {
     "Everyone on your team will see the host, port, user, database and SSH settings. This replaces the connections and saved queries you published before. Passwords are not included." : {
 
     },
@@ -85183,6 +85188,9 @@
         }
       }
     },
+    "Lease can only be compared with a lease ID, such as 0x7b." : {
+
+    },
     "Leave blank to connect without authentication. The password is stored in the macOS Keychain." : {
       "localizations" : {
         "ko" : {
@@ -106635,6 +106643,12 @@
 
     },
     "The SAP HANA schema name cannot be empty." : {
+
+    },
+    "This database cannot filter rows with these conditions." : {
+
+    },
+    "This engine cannot filter that table with those conditions." : {
 
     },
     "Value %1$lld, \"%2$@\", could not be converted for SAP HANA." : {
@@ -181907,6 +181921,12 @@
     "One row per line (NDJSON)" : {
 
     },
+    "etcd cannot filter with %@." : {
+
+    },
+    "etcd has no %@ column." : {
+
+    },
     "the compressed data is corrupt or was cut short" : {
 
     },
@@ -184856,6 +184876,12 @@
 
     },
     "%@ reads and writes through one connection, so it cannot copy rows between two of its schemas. Use a second connection for the target." : {
+
+    },
+    "Verify CA needs a CA certificate. In the etcd section of the Options tab, choose the CA Certificate that signed the server's certificate, or set TLS Mode to Verify Identity." : {
+
+    },
+    "etcd cannot filter with a raw SQL condition." : {
 
     }
   },

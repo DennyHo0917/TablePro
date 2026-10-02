@@ -523,8 +523,10 @@ targets:
       - Plugins/EtcdDriverPlugin/EtcdCommandParser.swift
       - Plugins/EtcdDriverPlugin/EtcdGatewayRoute.swift
       - Plugins/EtcdDriverPlugin/EtcdKeyspace.swift
+      - Plugins/EtcdDriverPlugin/EtcdLeaseID.swift
       - Plugins/EtcdDriverPlugin/EtcdQueryBuilder.swift
       - Plugins/EtcdDriverPlugin/EtcdRequestRecovery.swift
+      - Plugins/EtcdDriverPlugin/EtcdRowFilter.swift
       - Plugins/EtcdDriverPlugin/EtcdServerFault.swift
       - Plugins/EtcdDriverPlugin/EtcdServerTrust.swift
       - Plugins/EtcdDriverPlugin/EtcdStatementGenerator.swift
