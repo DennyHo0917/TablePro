@@ -7,34 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.77.1] - 2026-10-03
+
 ### Added
 
-- New… beside Browse… for SQLite, DuckDB and libSQL database files, to name a database that does not exist yet.
+- New… beside Browse… for SQLite, DuckDB and libSQL database files, to name a database that does not exist yet. (#3248)
 
 ### Changed
 
-- `$1` in a regular-expression Replace in the SQL editor inserts the capture group, as in data files.
+- `$1` in a regular-expression Replace in the SQL editor inserts the capture group, as in data files. (#3245)
 
 ### Fixed
 
-- Find panel Replace editing the wrong text after the first replacement, and crashing when a match ran past the end.
-- Replace All crashing on a space in an indent or after Clear Query, and wrapping quotes and brackets in pairs.
-- Replace All taking minutes on a few thousand matches, and two Replace clicks undoing as one step.
-- Replace and All offered in read-only editors, clearing the matches without changing the text.
-- A collapsed fold hiding the wrong text after Replace All.
-- Regular-expression Replace in data files inserting the wrong capture text when a replacement changes length.
-- Import into Table from a data file naming the sheet, the proposed table, error reports and history after a temporary copy.
-- Query editor staying put when Cmd+Up, Cmd+Down or a long paste moves the caret out of view. (#3239)
-- Clear Query, a favorite, a history entry or an AI fix sometimes not reaching the editor, and typing then bringing the old query back.
-- Run, Explain and AI actions using the caret from before a find or a jump to a result's statement.
-- Use Selection for Find reverting to the previous search term once the caret moves.
-- Connections strip entries cutting off their database or schema line, with the icon crowded against the top of the highlight. (#3244)
-- Connections strip resting partway through an entry after the sidebar size changed.
-- Oracle closing TablePro, or resetting with "unexpected message", while loading rows from a table with SDO_GEOMETRY or BLOB columns. (#3241)
-- Oracle closing TablePro when a query is stopped or the connection closed while rows are still loading. (#3241)
-- Oracle object columns such as SDO_GEOMETRY labelled "unknown" and showing a placeholder instead of NULL. (#3241)
-- DuckDB Browse… offering any file, and SQLite Browse… dimming SQLite databases saved without a known extension.
-- File > Open File… dimming folders reached through a symlink or a Finder alias.
+- Find panel Replace editing the wrong text after the first replacement, and crashing when a match ran past the end. (#3245)
+- Replace All crashing on a space in an indent or after Clear Query, and wrapping quotes and brackets in pairs. (#3245)
+- Replace All taking minutes on a few thousand matches, and two Replace clicks undoing as one step. (#3245)
+- Replace and All offered in read-only editors, clearing the matches without changing the text. (#3245)
+- A collapsed fold hiding the wrong text after Replace All. (#3245)
+- Regular-expression Replace in data files inserting the wrong capture text when a replacement changes length. (#3245)
+- Import into Table from a data file naming the sheet, table, error reports and history after a temporary copy. (#3238)
+- Query editor staying put when Cmd+Up, Cmd+Down or a long paste moves the caret out of view. (#3239, #3242)
+- Clear Query, a favorite, history entry or AI fix sometimes not reaching the editor, or typing restoring the old query. (#3242)
+- Run, Explain and AI actions using the caret from before a find or a jump to a result's statement. (#3242)
+- Use Selection for Find reverting to the previous search term once the caret moves. (#3242)
+- Connections strip entries cutting off the database or schema line and crowding the icon against the highlight. (#3244, #3247)
+- Connections strip resting partway through an entry after the sidebar size changed. (#3247)
+- Oracle closing TablePro, or failing with "unexpected message", while loading rows with SDO_GEOMETRY or BLOB columns. (#3241, #3246)
+- Oracle closing TablePro when a query is stopped or the connection closed while rows are still loading. (#3241, #3246)
+- Oracle object columns such as SDO_GEOMETRY labelled "unknown" and showing a placeholder instead of NULL. (#3241, #3246)
+- DuckDB Browse… offering any file, and SQLite Browse… dimming SQLite databases saved without a known extension. (#3248)
+- File > Open File… dimming folders reached through a symlink or a Finder alias. (#3248)
 
 ## [0.77.0] - 2026-10-02
 
@@ -5416,7 +5418,8 @@ TablePro is a native macOS database client built with SwiftUI and AppKit, design
     - Custom SQL query templates
     - Performance optimized for large datasets
 
-[Unreleased]: https://github.com/TableProApp/TablePro/compare/v0.77.0...HEAD
+[Unreleased]: https://github.com/TableProApp/TablePro/compare/v0.77.1...HEAD
+[0.77.1]: https://github.com/TableProApp/TablePro/compare/v0.77.0...v0.77.1
 [0.77.0]: https://github.com/TableProApp/TablePro/compare/v0.76.1...v0.77.0
 [0.76.1]: https://github.com/TableProApp/TablePro/compare/v0.76.0...v0.76.1
 [0.76.0]: https://github.com/TableProApp/TablePro/compare/v0.75.0...v0.76.0
