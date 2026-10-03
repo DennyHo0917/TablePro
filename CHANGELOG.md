@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - VoiceOver reading the welcome window and Integrations filter menus as "chevron.pulldown". (#3250)
 - Database icon filled in the database switcher and query editor, outline in the toolbar and sidebar. (#3250)
 - Status bar buttons a point or two taller or shorter than each other depending on their icon. (#3250)
+- Highlighted row in the database and connection switchers drawn as white text on a grey fill. (#3249)
 
 ## [0.77.1] - 2026-10-03
 
