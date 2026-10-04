@@ -7,51 +7,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.77.2] - 2026-10-05
+
 ### Added
 
-- Requesty in Add Provider, an OpenAI-compatible router with its Base URL filled in. (#3128)
+- Requesty in Add Provider, an OpenAI-compatible router with its Base URL filled in. (#3128 by @Thibaultjaigu)
 
 ### Changed
 
-- A new AI provider with several models and no default starts with no model picked. (#3128)
-- Toolbar Save is a plain checkmark, and the Safe Mode icon is filled only at the two Full levels. (#3250)
-- Actions, filter and Disconnect toolbar icons lose their circle on macOS 26 and later, and Actions its chevron. (#3250)
+- A new AI provider with several models and no default starts with no model picked. (#3128 by @Thibaultjaigu)
+- Toolbar Save is a plain checkmark, and the Safe Mode icon is filled only at the two Full levels. (#3250, #3252)
+- Actions, filter and Disconnect toolbar icons lose their circle on macOS 26 and later, and Actions its chevron. (#3250, #3252)
 
 ### Fixed
 
-- Reasoning setting ignored on OpenRouter, OpenCode Zen, llama.cpp, MLX and custom AI providers. (#3128)
-- Reasoning picker shown for Gemini and Ollama, where it changed nothing. (#3128)
-- Image attachments offered for OpenRouter models that take text only. (#3128)
-- Max output tokens ignored and image attachments rejected on Ollama. (#3128)
-- AI provider failing with "Invalid endpoint" until relaunch after its Base URL was cleared. (#3128)
-- Export in the Structure and object source views showing the Import icon. (#3250)
-- VoiceOver reading the welcome window and Integrations filter menus as "chevron.pulldown". (#3250)
-- Database icon filled in the database switcher and query editor, outline in the toolbar and sidebar. (#3250)
-- Status bar buttons a point or two taller or shorter than each other depending on their icon. (#3250)
-- Highlighted row in the database and connection switchers drawn as white text on a grey fill. (#3249)
-- Second "#" column showing beside the row numbers when the data grid bounces past its left edge.
-- Last column's divider sitting on the grid's right edge, where it could not be dragged to resize.
-- Cells keeping their old width or order while a column is resized or dragged, until the mouse is released.
-- Resize cursor showing a few points from a column divider, where a drag moved the column instead.
-- Elasticsearch, Typesense and Weaviate request bodies underlined as syntax errors although they run.
-- Wildcard index paths such as `GET /_cat/indices/*` underlined as an unterminated comment.
-- Brackets in Redis and etcd command arguments underlined as unmatched.
-- Colons in Elasticsearch URLs, Redis keys and SurrealDB record IDs read as query parameters, holding the run.
-- Counts reading "3 table to export" in the Export dialog, and "1 rows" in the result status bar and query plan.
-- Copy To from MySQL, MariaDB or SQL Server into PostgreSQL, SQLite, DuckDB or Oracle failing on a repeated index name.
-- Copy To review breaking a long ENUM type mid-word, and not naming the table each type change belongs to.
-- Safe Mode's Touch ID prompt reading "TablePro is trying to Authenticate to execute database operations."
-- VoiceOver reading no name for the AI provider pop-up, max output tokens, plugin category filter and CSV NULL text field.
-- Shortcuts Add Row and Add Rows listing no tables until a database or schema is picked, which SQLite never offers.
-- Server Dashboard's metrics staying on a spinner, and slow queries never refreshing.
-- Users & Roles privilege checkboxes, Review & Apply and "Modified" not updating after a click.
-- Count Exactly on a Redis database leaving the estimate in place.
-- Status bar truncating the row count and Count Exactly instead of dropping to a narrower layout.
-- Query editor bar cut off, with the editor's text over it, when the editor pane is at its smallest.
-- Long column names drawn over their type in the ER diagram.
-- Beancount BQL results showing a position as raw JSON, tags and links as a JSON list, and booleans as 1 or 0.
-- Beancount BQL results, tables, directive metadata and transaction tags coming back empty with `rledger` 0.23 and later.
-- Beancount balances listing a commodity held in several lots once per lot on `rledger`.
+- Reasoning setting ignored on OpenRouter, OpenCode Zen, llama.cpp, MLX and custom AI providers. (#3128 by @Thibaultjaigu)
+- Reasoning picker shown for Gemini and Ollama, where it changed nothing. (#3128 by @Thibaultjaigu)
+- Image attachments offered for OpenRouter models that take text only. (#3128 by @Thibaultjaigu)
+- Max output tokens ignored and image attachments rejected on Ollama. (#3128 by @Thibaultjaigu)
+- AI provider failing with "Invalid endpoint" until relaunch after its Base URL was cleared. (#3128 by @Thibaultjaigu)
+- Export in the Structure and object source views showing the Import icon. (#3250, #3252)
+- VoiceOver reading the welcome window and Integrations filter menus as "chevron.pulldown". (#3250, #3252)
+- Database icon filled in the database switcher and query editor, outline in the toolbar and sidebar. (#3250, #3252)
+- Status bar buttons a point or two taller or shorter than each other depending on their icon. (#3250, #3252)
+- Highlighted row in the database and connection switchers drawn as white text on a grey fill. (#3249, #3251)
+- Second "#" column showing beside the row numbers when the data grid bounces past its left edge. (#3254)
+- Last column's divider sitting on the grid's right edge, where it could not be dragged to resize. (#3254)
+- Cells keeping their old width or order while a column is resized or dragged, until the mouse is released. (#3254)
+- Resize cursor showing a few points from a column divider, where a drag moved the column instead. (#3254)
+- Elasticsearch, Typesense and Weaviate request bodies underlined as syntax errors although they run. (#3255)
+- Wildcard index paths such as `GET /_cat/indices/*` underlined as an unterminated comment. (#3255)
+- Brackets in Redis and etcd command arguments underlined as unmatched. (#3255)
+- Colons in Elasticsearch URLs, Redis keys and SurrealDB record IDs read as query parameters, holding the run. (#3255)
+- Counts reading "3 table to export" in the Export dialog, and "1 rows" in the result status bar and query plan. (#3256)
+- Copy To from MySQL, MariaDB or SQL Server into PostgreSQL, SQLite, DuckDB or Oracle failing on a repeated index name. (#3258)
+- Copy To review breaking a long ENUM type mid-word, and not naming the table each type change belongs to. (#3258)
+- Safe Mode's Touch ID prompt reading "TablePro is trying to Authenticate to execute database operations." (#3256)
+- No VoiceOver name on the AI provider pop-up, max output tokens, plugin category filter and CSV NULL text field. (#3256)
+- Shortcuts Add Row and Add Rows listing no tables until a database or schema is picked, which SQLite never offers. (#3259)
+- Server Dashboard's metrics staying on a spinner, and slow queries never refreshing. (#3257)
+- Users & Roles privilege checkboxes, Review & Apply and "Modified" not updating after a click. (#3257)
+- Count Exactly on a Redis database leaving the estimate in place. (#3257)
+- Status bar truncating the row count and Count Exactly instead of dropping to a narrower layout. (#3257)
+- Query editor bar cut off, with the editor's text over it, when the editor pane is at its smallest. (#3257)
+- Long column names drawn over their type in the ER diagram. (#3257)
+- Beancount BQL results showing a position as raw JSON, tags and links as a JSON list, and booleans as 1 or 0. (#3260)
+- Beancount BQL results, tables, directive metadata and transaction tags empty with `rledger` 0.23 and later. (#3260)
+- Beancount balances listing a commodity held in several lots once per lot on `rledger`. (#3260)
 
 ## [0.77.1] - 2026-10-03
 
@@ -5464,7 +5466,8 @@ TablePro is a native macOS database client built with SwiftUI and AppKit, design
     - Custom SQL query templates
     - Performance optimized for large datasets
 
-[Unreleased]: https://github.com/TableProApp/TablePro/compare/v0.77.1...HEAD
+[Unreleased]: https://github.com/TableProApp/TablePro/compare/v0.77.2...HEAD
+[0.77.2]: https://github.com/TableProApp/TablePro/compare/v0.77.1...v0.77.2
 [0.77.1]: https://github.com/TableProApp/TablePro/compare/v0.77.0...v0.77.1
 [0.77.0]: https://github.com/TableProApp/TablePro/compare/v0.76.1...v0.77.0
 [0.76.1]: https://github.com/TableProApp/TablePro/compare/v0.76.0...v0.76.1
