@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Last column's divider sitting on the grid's right edge, where it could not be dragged to resize.
 - Cells keeping their old width or order while a column is resized or dragged, until the mouse is released.
 - Resize cursor showing a few points from a column divider, where a drag moved the column instead.
+- Elasticsearch, Typesense and Weaviate request bodies underlined as syntax errors although they run.
+- Wildcard index paths such as `GET /_cat/indices/*` underlined as an unterminated comment.
+- Brackets in Redis and etcd command arguments underlined as unmatched.
+- Colons in Elasticsearch URLs, Redis keys and SurrealDB record IDs read as query parameters, holding the run.
 - Counts reading "3 table to export" in the Export dialog, and "1 rows" in the result status bar and query plan.
 - Safe Mode's Touch ID prompt reading "TablePro is trying to Authenticate to execute database operations."
 - VoiceOver reading no name for the AI provider pop-up, max output tokens, plugin category filter and CSV NULL text field.
