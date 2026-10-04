@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Counts reading "3 table to export" in the Export dialog, and "1 rows" in the result status bar and query plan.
 - Safe Mode's Touch ID prompt reading "TablePro is trying to Authenticate to execute database operations."
 - VoiceOver reading no name for the AI provider pop-up, max output tokens, plugin category filter and CSV NULL text field.
+- Shortcuts Add Row and Add Rows listing no tables until a database or schema is picked, which SQLite never offers.
 - Server Dashboard's metrics staying on a spinner, and slow queries never refreshing.
 - Users & Roles privilege checkboxes, Review & Apply and "Modified" not updating after a click.
 - Count Exactly on a Redis database leaving the estimate in place.
