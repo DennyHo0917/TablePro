@@ -7,22 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-
-- Users & Roles object tree keeping its old rows after a search or a switch to Granted, until something else changed.
-- Users & Roles search results showing a disclosure triangle that opened onto nothing.
-- Redis tab narrowed by its key pattern or type showing the whole database's key count as its "~" total.
-- Redis key pattern change keeping the previous pattern's exact count.
-- Format Query on Elasticsearch, Typesense and Weaviate joining the body onto the request line and changing the URL.
-- Format Query changing Redis keys, etcd paths and SurrealDB record ids, such as `user:1` into `user :1`.
-- Sidebar Show All running a MongoDB command on Elasticsearch, Typesense and Weaviate, and a Redis command on etcd.
-- Change preview on Elasticsearch, Typesense and Weaviate rewriting a stored `{"$oid": …}` as `ObjectId(…)`.
-- Preview SQL and other wrapped text splitting a quoted name such as `"public"."reviews"` across two lines.
-- Copy To into PostgreSQL, SQLite, DuckDB or Oracle failing on an index name another table in the target schema already uses.
-- Crash when VoiceOver reads Settings > License while a license appears in it.
-- Pickers, checkboxes and fields that VoiceOver announced by role alone, such as in Copy To, Users & Roles and Create Table.
-- Shortcuts Table and Database or Schema pickers showing an empty list instead of why the connection failed.
-
 ## [0.77.2] - 2026-10-05
 
 ### Added
@@ -55,15 +39,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wildcard index paths such as `GET /_cat/indices/*` underlined as an unterminated comment. (#3255)
 - Brackets in Redis and etcd command arguments underlined as unmatched. (#3255)
 - Colons in Elasticsearch URLs, Redis keys and SurrealDB record IDs read as query parameters, holding the run. (#3255)
+- Format Query on Elasticsearch, Typesense and Weaviate joining the body onto the request line and changing the URL. (#3263)
+- Format Query changing Redis keys, etcd paths and SurrealDB record ids, such as `user:1` into `user :1`. (#3263)
+- Sidebar Show All running a MongoDB command on Elasticsearch, Typesense and Weaviate, and a Redis command on etcd. (#3263)
+- Change preview on Elasticsearch, Typesense and Weaviate rewriting a stored `{"$oid": …}` as `ObjectId(…)`. (#3263)
+- Preview SQL and other wrapped text splitting a quoted name such as `"public"."reviews"` across two lines. (#3263)
 - Counts reading "3 table to export" in the Export dialog, and "1 rows" in the result status bar and query plan. (#3256)
-- Copy To from MySQL, MariaDB or SQL Server into PostgreSQL, SQLite, DuckDB or Oracle failing on a repeated index name. (#3258)
+- Copy To into PostgreSQL, SQLite, DuckDB or Oracle failing on an index name repeated in the copy or the target. (#3258, #3264)
 - Copy To review breaking a long ENUM type mid-word, and not naming the table each type change belongs to. (#3258)
 - Safe Mode's Touch ID prompt reading "TablePro is trying to Authenticate to execute database operations." (#3256)
-- No VoiceOver name on the AI provider pop-up, max output tokens, plugin category filter and CSV NULL text field. (#3256)
+- No VoiceOver name on pickers and fields such as the AI provider pop-up, CSV NULL text, Copy To and Create Table. (#3256, #3265)
+- Crash when VoiceOver reads Settings > License while a license appears in it. (#3265)
 - Shortcuts Add Row and Add Rows listing no tables until a database or schema is picked, which SQLite never offers. (#3259)
+- Shortcuts Table and Database or Schema pickers showing an empty list instead of why the connection failed. (#3266)
 - Server Dashboard's metrics staying on a spinner, and slow queries never refreshing. (#3257)
 - Users & Roles privilege checkboxes, Review & Apply and "Modified" not updating after a click. (#3257)
-- Count Exactly on a Redis database leaving the estimate in place. (#3257)
+- Users & Roles object tree keeping its old rows after a search or a switch to Granted, until something else changed. (#3262)
+- Users & Roles search results showing a disclosure triangle that opened onto nothing. (#3262)
+- Count Exactly on a Redis database leaving the estimate in place. (#3257, #3262)
+- Redis tab narrowed by its key pattern or type showing the whole database's key count as its "~" total. (#3262)
 - Status bar truncating the row count and Count Exactly instead of dropping to a narrower layout. (#3257)
 - Query editor bar cut off, with the editor's text over it, when the editor pane is at its smallest. (#3257)
 - Long column names drawn over their type in the ER diagram. (#3257)
