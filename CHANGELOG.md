@@ -7,8 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- PostgreSQL, Redshift and CockroachDB keep one connection per database in the connections strip, and send TCP keepalives so idle ones stay open.
+
 ### Fixed
 
+- Switching between two databases of a PostgreSQL connection reconnecting each time and dropping the open transaction and temp tables.
+- A tab on a database the connection had switched away from running on a shared connection that closed after 10 minutes idle.
+- Import and Copy To committing a transaction left open on the target connection.
+- Health check reconnecting a PostgreSQL session that was sitting in a failed transaction.
 - Each switch between connections in the connections strip reloading that connection's schema.
 - Opening a connection fetching every column of its schema twice.
 - Unsaved grid edits not kept with their tab after jumping to a tab of a background connection.
