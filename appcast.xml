@@ -3,6 +3,47 @@
     <channel>
         <title>TablePro</title>
         <item>
+            <title>0.78.0</title>
+            <pubDate>Wed, 07 Oct 2026 08:08:34 +0000</pubDate>
+            <sparkle:fullReleaseNotesLink>https://docs.tablepro.app/changelog</sparkle:fullReleaseNotesLink>
+            <sparkle:phasedRolloutInterval>21600</sparkle:phasedRolloutInterval>
+            <sparkle:version>137</sparkle:version>
+            <sparkle:shortVersionString>0.78.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <description sparkle:format="markdown"><![CDATA[# What's New in TablePro 0.78.0
+
+TablePro in French: pick Français in Settings > General.
+
+Switching databases on PostgreSQL, Redshift and CockroachDB keeps the open transaction and temp tables.
+
+Oracle fixes for column types, dates, LOBs and saving edits.
+
+[View full changelog](https://docs.tablepro.app/changelog)
+]]></description>
+            <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.78.0/TablePro-0.78.0-arm64.zip" length="32914475" type="application/octet-stream" sparkle:edSignature="FyoqgyP6GZ01EQlgV44SUEdXLW1qD7qtBINj+TW3Ty6rfj+mQbrc9ojSRl5UYMNZ2G07SSha+oaRr+S8AEM5DQ=="/>
+        </item>
+        <item>
+            <title>0.78.0</title>
+            <pubDate>Wed, 07 Oct 2026 08:08:35 +0000</pubDate>
+            <sparkle:fullReleaseNotesLink>https://docs.tablepro.app/changelog</sparkle:fullReleaseNotesLink>
+            <sparkle:phasedRolloutInterval>21600</sparkle:phasedRolloutInterval>
+            <sparkle:version>137</sparkle:version>
+            <sparkle:shortVersionString>0.78.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[# What's New in TablePro 0.78.0
+
+TablePro in French: pick Français in Settings > General.
+
+Switching databases on PostgreSQL, Redshift and CockroachDB keeps the open transaction and temp tables.
+
+Oracle fixes for column types, dates, LOBs and saving edits.
+
+[View full changelog](https://docs.tablepro.app/changelog)
+]]></description>
+            <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.78.0/TablePro-0.78.0-x86_64.zip" length="35357723" type="application/octet-stream" sparkle:edSignature="azYx6/g8FqNeGKDPCF+t6lqE2M7k8gsLcP6MjyS3BcdRe6wt+ME07RW/uPe8bUorlDVpFqIkRr8v9kD7aj1mCQ=="/>
+        </item>
+        <item>
             <title>0.77.2</title>
             <pubDate>Mon, 05 Oct 2026 03:51:30 +0000</pubDate>
             <sparkle:fullReleaseNotesLink>https://docs.tablepro.app/changelog</sparkle:fullReleaseNotesLink>
@@ -405,47 +446,6 @@ Imports that remember each table's column mapping, and connect and query timeout
 [View full changelog](https://docs.tablepro.app/changelog)
 ]]></description>
             <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.76.1/TablePro-0.76.1-x86_64.zip" length="33766590" type="application/octet-stream" sparkle:edSignature="JG9SWtbYD7yPO7LWbDZLPqiR6HtHP0HOWFcoOi85x7jBU4JJSCw4N13siJhMNIuk6e9vQcxkFczKUUKzYEaKAA=="/>
-        </item>
-        <item>
-            <title>0.76.0</title>
-            <pubDate>Mon, 28 Sep 2026 09:14:47 +0000</pubDate>
-            <sparkle:fullReleaseNotesLink>https://docs.tablepro.app/changelog</sparkle:fullReleaseNotesLink>
-            <sparkle:criticalUpdate/>
-            <sparkle:version>132</sparkle:version>
-            <sparkle:shortVersionString>0.76.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <description sparkle:format="markdown"><![CDATA[# What's New in TablePro 0.76.0
-
-Agent mode: one AI session that works across the whole connection window, with every statement it ran.
-A Data Files window for CSV, JSON, Excel and compressed files, with find and replace, column statistics and cleanup.
-MongoDB documents inserted and edited as Extended JSON, and fields renamed or removed from the Structure tab.
-Tools from your own MCP servers, available to AI sessions from Settings > Integrations.
-The table list beside the table browser on iPad, and a sample database on iPhone and iPad.
-
-[View full changelog](https://docs.tablepro.app/changelog)
-]]></description>
-            <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.76.0/TablePro-0.76.0-arm64.zip" length="31444126" type="application/octet-stream" sparkle:edSignature="cnmjq3iaKJcfSM73yIYoQSziBcyz4/Oy7jgqloqFLlYne+d3GX38V/4+m6XzPMT8dU0xGXPil/BHDme/fZfIAA=="/>
-        </item>
-        <item>
-            <title>0.76.0</title>
-            <pubDate>Mon, 28 Sep 2026 09:14:48 +0000</pubDate>
-            <sparkle:fullReleaseNotesLink>https://docs.tablepro.app/changelog</sparkle:fullReleaseNotesLink>
-            <sparkle:criticalUpdate/>
-            <sparkle:version>132</sparkle:version>
-            <sparkle:shortVersionString>0.76.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <description sparkle:format="markdown"><![CDATA[# What's New in TablePro 0.76.0
-
-Agent mode: one AI session that works across the whole connection window, with every statement it ran.
-A Data Files window for CSV, JSON, Excel and compressed files, with find and replace, column statistics and cleanup.
-MongoDB documents inserted and edited as Extended JSON, and fields renamed or removed from the Structure tab.
-Tools from your own MCP servers, available to AI sessions from Settings > Integrations.
-The table list beside the table browser on iPad, and a sample database on iPhone and iPad.
-
-[View full changelog](https://docs.tablepro.app/changelog)
-]]></description>
-            <enclosure url="https://github.com/TableProApp/TablePro/releases/download/v0.76.0/TablePro-0.76.0-x86_64.zip" length="33720555" type="application/octet-stream" sparkle:edSignature="cdYKQFTt4n5oeyJUYFBot2n78usb0C12cmQZ/1A3AeeLmZUJ+ZdLREIhw422uHd+7IgVAWpKFcArIK4hD6NuDg=="/>
         </item>
     </channel>
 </rss>
