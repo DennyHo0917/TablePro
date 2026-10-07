@@ -5,6 +5,14 @@ import XCTest
 /// the key field, so the sheet never reaches the network.
 final class AIProviderPresetUITests: UITestCase {
     func testRequestyPresetFillsItsBaseURLAndWaitsForAKey() throws {
+        try assertPreset(name: "Requesty", endpoint: "https://router.requesty.ai")
+    }
+
+    func testAPIRoutePresetFillsItsBaseURLAndWaitsForAKey() throws {
+        try assertPreset(name: "API Route", endpoint: "https://global.api-route.com")
+    }
+
+    private func assertPreset(name presetName: String, endpoint: String) throws {
         let app = try launchApp()
         XCTAssertTrue(app.windows.firstMatch.waitToExist(timeout: 10))
 
@@ -27,9 +35,9 @@ final class AIProviderPresetUITests: UITestCase {
         XCTAssertTrue(addProvider.waitToExist(timeout: 10))
         addProvider.click()
 
-        let requesty = app.menuItems["Requesty"]
-        XCTAssertTrue(requesty.waitToExist(timeout: 10))
-        requesty.click()
+        let preset = app.menuItems[presetName]
+        XCTAssertTrue(preset.waitToExist(timeout: 10))
+        preset.click()
 
         let sheet = settingsWindow.sheets.firstMatch
         XCTAssertTrue(sheet.waitToExist(timeout: 10))
@@ -38,14 +46,14 @@ final class AIProviderPresetUITests: UITestCase {
         /// fields are found by identifier rather than by their visible titles.
         let baseURL = sheet.textFields["ai-provider-base-url"]
         XCTAssertTrue(baseURL.waitToExist(timeout: 10))
-        XCTAssertEqual(baseURL.value as? String, "https://router.requesty.ai")
+        XCTAssertEqual(baseURL.value as? String, endpoint)
 
         let name = sheet.textFields["ai-provider-name"]
         XCTAssertTrue(name.waitToExist(timeout: 10))
-        XCTAssertEqual(name.value as? String, "Requesty")
+        XCTAssertEqual(name.value as? String, presetName)
 
         let save = settingsWindow.buttons["ai-provider-save"]
         XCTAssertTrue(save.waitToExist(timeout: 10))
-        XCTAssertFalse(save.isEnabled, "Requesty requires a key, so Save has to wait for one")
+        XCTAssertFalse(save.isEnabled, "\(presetName) requires a key, so Save has to wait for one")
     }
 }

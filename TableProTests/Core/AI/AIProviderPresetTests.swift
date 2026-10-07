@@ -31,6 +31,46 @@ struct AIProviderPresetTests {
         )
     }
 
+    @Test("API Route requires a key and resolves its chat and model endpoints")
+    func apiRoutePreset() throws {
+        let preset = AIProviderPreset.apiRoute
+        let config = AIProviderConfig(preset: preset)
+        let style = config.type.endpointStyle
+        #expect(config.type == .custom)
+        #expect(config.name == "API Route")
+        #expect(config.authStyle == .apiKey)
+        #expect(!preset.rejectsBadKeyWithForbidden)
+        #expect(style == .chatCompletions)
+        #expect(
+            AIEndpoint(config.endpoint, style: style)?.chatURL(model: "gpt-6.1-sol", style: style)?.absoluteString
+                == "https://global.api-route.com/v1/chat/completions"
+        )
+        #expect(
+            AIEndpoint(config.endpoint, style: style)?.url(appending: style.modelsResource)?.absoluteString
+                == "https://global.api-route.com/v1/models"
+        )
+        #expect(AIProviderDraftRules.modelListBlocker(
+            descriptor: AIProviderRegistry.shared.descriptor(for: config.type.rawValue),
+            draft: config,
+            apiKey: ""
+        ) != nil)
+    }
+
+    @Test("API Route keeps its preset identity and bare model ID when settings round trip")
+    func apiRouteRoundTrips() throws {
+        var config = AIProviderConfig(preset: .apiRoute)
+        config.model = "claude-fable-5-1"
+        let data = try JSONEncoder().encode(config)
+        let json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        #expect(json["type"] as? String == "custom")
+        #expect(json["presetID"] as? String == "api-route")
+        let decoded = try JSONDecoder().decode(AIProviderConfig.self, from: data)
+        #expect(decoded == config)
+        #expect(decoded.preset == .apiRoute)
+        #expect(decoded.authStyle == .apiKey)
+        #expect(decoded.model == "claude-fable-5-1")
+    }
+
     @Test("Every preset has a unique id and an https endpoint the transport can resolve")
     func presetsAreWellFormed() {
         #expect(Set(AIProviderPreset.all.map(\.id)).count == AIProviderPreset.all.count)

@@ -29,7 +29,16 @@ struct AIProviderPreset: Identifiable, Equatable, Sendable {
         rejectsBadKeyWithForbidden: true
     )
 
-    static let all: [AIProviderPreset] = [.requesty]
+    static let apiRoute = AIProviderPreset(
+        id: "api-route",
+        displayName: "API Route",
+        endpoint: "https://global.api-route.com",
+        symbolName: "network",
+        authStyle: .apiKey,
+        rejectsBadKeyWithForbidden: false
+    )
+
+    static let all: [AIProviderPreset] = [.requesty, .apiRoute]
 
     static func preset(withID id: String?) -> AIProviderPreset? {
         guard let id else { return nil }
