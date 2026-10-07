@@ -29,7 +29,7 @@ Open **Settings > AI** (`Cmd+,`). **Enable AI Features** at the top gates the wh
   </Step>
 </Steps>
 
-The **Active Provider** picker decides which one handles requests. Setting it to **None** leaves any open conversation readable but read-only, with a **Settings…** button under it. Where a model supports reasoning effort, its detail sheet adds a picker for it and replies render their thinking in a collapsible **Reasoning** block. Gemini and Ollama have no picker, and on a router the picker follows the model: it is gone for a model the router lists as non-reasoning.
+The **Active Provider** picker decides which one handles requests. Setting it to **None** leaves any open conversation readable but read-only, with a **Settings…** button under it. Where a model supports reasoning effort, its detail sheet adds a picker for it and replies render their thinking in a collapsible **Reasoning** block. Gemini and Ollama have no picker, and on OpenRouter and Requesty the picker follows the model: it is gone for a model the router lists as non-reasoning.
 
 With no preference, start with Claude or OpenAI on an API key: both take a key, tools, and images with no further setup. The others each come with something to know.
 
@@ -40,7 +40,7 @@ With no preference, start with Claude or OpenAI on an API key: both take a key, 
 | Cursor | API key, or **Sign in with Cursor** with the Cursor CLI installed | Runs as an agent, not a chat-completions endpoint, so it cannot call TablePro's tools: Edit and Agent modes run no queries through it |
 | xAI | API key, or **Sign in with xAI** on a SuperGrok or X Premium+ subscription | Sign-in opens a Grok Build consent screen and is unofficial. Presets: Grok 4.5, Grok 4.3 |
 | Requesty | API key | An OpenAI-compatible router. The Base URL is filled in; set it to `https://router.eu.requesty.ai` for EU routing |
-| API Route | API key | Select a chat model from the key's catalog at `https://global.api-route.com`; keep its full model ID |
+| API Route | API key | An OpenAI-compatible router. The Base URL is filled in, and the model list holds the models your key can use. The list does not mark which take images or reasoning effort, so choose a model that does before you attach an image or set an effort |
 | Ollama, llama.cpp, MLX | None. Start the server first | Presets fill in `http://localhost:11434` for Ollama and `http://localhost:8080` for `llama-server` and `mlx_lm.server`. Start `llama-server` with `--jinja` for tool calling |
 | Claude Agent | Claude Code's `claude` command, no key | Bills against a Claude subscription, with tradeoffs |
 

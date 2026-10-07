@@ -63,7 +63,7 @@ final class OpenAICompatibleProvider: ChatTransport {
             providerType: config.type,
             model: config.model,
             maxOutputTokens: config.maxOutputTokens,
-            treatsForbiddenAsAuthFailure: config.preset?.rejectsBadKeyWithForbidden ?? false,
+            treatsForbiddenAsAuthFailure: config.preset?.treatsForbiddenAsAuthFailure ?? false,
             providerID: config.id,
             session: session
         )

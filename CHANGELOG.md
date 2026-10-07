@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- API Route preset in the AI provider menu.
+- API Route in Add Provider, an OpenAI-compatible router with its Base URL filled in.
 
 ## [0.78.0] - 2026-10-07
 

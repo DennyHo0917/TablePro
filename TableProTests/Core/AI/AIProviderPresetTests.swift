@@ -12,64 +12,18 @@ struct AIProviderPresetTests {
         AIProviderRegistration.registerAll()
     }
 
-    @Test("Requesty needs a key, and its default Base URL resolves to its chat completions route")
-    func requestyPreset() throws {
-        let preset = AIProviderPreset.requesty
-        #expect(preset.authStyle == .apiKey)
-        #expect(preset.rejectsBadKeyWithForbidden)
-
-        let config = AIProviderConfig(preset: preset)
-        let style = config.type.endpointStyle
-        #expect(style == .chatCompletions)
-        #expect(
-            AIEndpoint(config.endpoint, style: style)?.chatURL(model: "openai/gpt-5.5", style: style)?.absoluteString
-                == "https://router.requesty.ai/v1/chat/completions"
+    /// Taken from each vendor's own docs, so a new preset cannot pass on a Base URL that only
+    /// looks right.
+    private static let documentedRoutes: [String: (chat: String, models: String)] = [
+        "requesty": (
+            "https://router.requesty.ai/v1/chat/completions",
+            "https://router.requesty.ai/v1/models"
+        ),
+        "api-route": (
+            "https://global.api-route.com/v1/chat/completions",
+            "https://global.api-route.com/v1/models"
         )
-        #expect(
-            AIEndpoint(config.endpoint, style: style)?.url(appending: style.modelsResource)?.absoluteString
-                == "https://router.requesty.ai/v1/models"
-        )
-    }
-
-    @Test("API Route requires a key and resolves its chat and model endpoints")
-    func apiRoutePreset() throws {
-        let preset = AIProviderPreset.apiRoute
-        let config = AIProviderConfig(preset: preset)
-        let style = config.type.endpointStyle
-        #expect(config.type == .custom)
-        #expect(config.name == "API Route")
-        #expect(config.authStyle == .apiKey)
-        #expect(!preset.rejectsBadKeyWithForbidden)
-        #expect(style == .chatCompletions)
-        #expect(
-            AIEndpoint(config.endpoint, style: style)?.chatURL(model: "gpt-6.1-sol", style: style)?.absoluteString
-                == "https://global.api-route.com/v1/chat/completions"
-        )
-        #expect(
-            AIEndpoint(config.endpoint, style: style)?.url(appending: style.modelsResource)?.absoluteString
-                == "https://global.api-route.com/v1/models"
-        )
-        #expect(AIProviderDraftRules.modelListBlocker(
-            descriptor: AIProviderRegistry.shared.descriptor(for: config.type.rawValue),
-            draft: config,
-            apiKey: ""
-        ) != nil)
-    }
-
-    @Test("API Route keeps its preset identity and bare model ID when settings round trip")
-    func apiRouteRoundTrips() throws {
-        var config = AIProviderConfig(preset: .apiRoute)
-        config.model = "claude-fable-5-1"
-        let data = try JSONEncoder().encode(config)
-        let json = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
-        #expect(json["type"] as? String == "custom")
-        #expect(json["presetID"] as? String == "api-route")
-        let decoded = try JSONDecoder().decode(AIProviderConfig.self, from: data)
-        #expect(decoded == config)
-        #expect(decoded.preset == .apiRoute)
-        #expect(decoded.authStyle == .apiKey)
-        #expect(decoded.model == "claude-fable-5-1")
-    }
+    ]
 
     @Test("Every preset has a unique id and an https endpoint the transport can resolve")
     func presetsAreWellFormed() {
@@ -83,24 +37,37 @@ struct AIProviderPresetTests {
         #expect(AIProviderPreset.preset(withID: "no-such-vendor") == nil)
     }
 
-    @Test("A provider added from a preset is a custom provider that reads as the vendor")
-    func presetConfigReadsAsTheVendor() {
-        let config = AIProviderConfig(preset: .requesty)
-        #expect(config.type == .custom)
-        #expect(config.presetID == "requesty")
-        #expect(config.preset == .requesty)
-        #expect(config.name == "Requesty")
-        #expect(config.endpoint == "https://router.requesty.ai")
-        #expect(config.kindName == "Requesty")
-        #expect(config.symbolName == AIProviderPreset.requesty.symbolName)
-        #expect(config.authStyle == .apiKey)
+    @Test("A preset's default Base URL resolves to the chat and model routes its vendor documents",
+          arguments: AIProviderPreset.all)
+    func defaultBaseURLResolvesToTheVendorRoutes(preset: AIProviderPreset) throws {
+        let routes = try #require(Self.documentedRoutes[preset.id], "\(preset.id) has no documented routes")
+        let config = AIProviderConfig(preset: preset)
+        let style = config.type.endpointStyle
+        let endpoint = try #require(AIEndpoint(config.endpoint, style: style))
+        #expect(endpoint.chatURL(model: "vendor/model-1", style: style)?.absoluteString == routes.chat)
+        #expect(endpoint.url(appending: style.modelsResource)?.absoluteString == routes.models)
     }
 
-    @Test("A preset provider whose name was cleared still shows the vendor, not Custom")
-    func clearedNameFallsBackToTheVendor() {
-        var config = AIProviderConfig(preset: .requesty)
+    @Test("A provider added from a preset is a custom provider that reads as the vendor",
+          arguments: AIProviderPreset.all)
+    func presetConfigReadsAsTheVendor(preset: AIProviderPreset) {
+        let config = AIProviderConfig(preset: preset)
+        #expect(config.type == .custom)
+        #expect(config.presetID == preset.id)
+        #expect(config.preset == preset)
+        #expect(config.name == preset.displayName)
+        #expect(config.endpoint == preset.endpoint)
+        #expect(config.kindName == preset.displayName)
+        #expect(config.symbolName == preset.symbolName)
+        #expect(config.authStyle == preset.authStyle)
+    }
+
+    @Test("A preset provider whose name was cleared still shows the vendor, not Custom",
+          arguments: AIProviderPreset.all)
+    func clearedNameFallsBackToTheVendor(preset: AIProviderPreset) {
+        var config = AIProviderConfig(preset: preset)
         config.name = ""
-        #expect(config.displayName == "Requesty")
+        #expect(config.displayName == preset.displayName)
     }
 
     @Test("A plain custom provider keeps its own name, icon and optional key")
@@ -123,32 +90,38 @@ struct AIProviderPresetTests {
 
     /// The point of a preset over a new provider type: the stored type is one every released
     /// build already decodes, so settings synced to an older build keep all their providers.
-    @Test("A preset provider is stored under the custom type, which older builds decode")
-    func storedTypeIsCustom() throws {
-        let data = try JSONEncoder().encode(AIProviderConfig(preset: .requesty))
+    @Test("A preset provider is stored under the custom type, which older builds decode",
+          arguments: AIProviderPreset.all)
+    func storedTypeIsCustom(preset: AIProviderPreset) throws {
+        let data = try JSONEncoder().encode(AIProviderConfig(preset: preset))
         let object = try JSONSerialization.jsonObject(with: data)
         let json = try #require(object as? [String: Any])
         #expect(json["type"] as? String == "custom")
-        #expect(json["presetID"] as? String == "requesty")
-        #expect(json["name"] as? String == "Requesty")
-        #expect(json["endpoint"] as? String == "https://router.requesty.ai")
+        #expect(json["presetID"] as? String == preset.id)
+        #expect(json["name"] as? String == preset.displayName)
+        #expect(json["endpoint"] as? String == preset.endpoint)
     }
 
-    @Test("A preset provider survives an encode and decode round trip")
-    func roundTrips() throws {
-        var config = AIProviderConfig(preset: .requesty)
-        config.model = "anthropic/claude-sonnet-5"
-        config.endpoint = "https://router.eu.requesty.ai"
+    @Test("A preset provider keeps its model and edited Base URL through an encode and decode",
+          arguments: AIProviderPreset.all)
+    func roundTrips(preset: AIProviderPreset) throws {
+        var config = AIProviderConfig(preset: preset)
+        config.model = "vendor/model-1"
+        config.endpoint = "https://proxy.example.com"
         let decoded = try JSONDecoder().decode(AIProviderConfig.self, from: JSONEncoder().encode(config))
         #expect(decoded == config)
-        #expect(decoded.authStyle == .apiKey)
+        #expect(decoded.preset == preset)
+        #expect(decoded.authStyle == preset.authStyle)
     }
 
-    @Test("A stored preset provider with no endpoint decodes to the preset's default")
-    func emptyEndpointDecodesToThePresetDefault() throws {
-        let json = #"{"id":"11111111-2222-3333-4444-555555555555","type":"custom","presetID":"requesty","endpoint":""}"#
+    @Test("A stored preset provider with no endpoint decodes to the preset's default",
+          arguments: AIProviderPreset.all)
+    func emptyEndpointDecodesToThePresetDefault(preset: AIProviderPreset) throws {
+        let json = #"""
+        {"id":"11111111-2222-3333-4444-555555555555","type":"custom","presetID":"\#(preset.id)","endpoint":""}
+        """#
         let decoded = try JSONDecoder().decode(AIProviderConfig.self, from: Data(json.utf8))
-        #expect(decoded.endpoint == "https://router.requesty.ai")
+        #expect(decoded.endpoint == preset.endpoint)
     }
 
     @Test("A custom provider saved before presets existed decodes with none")
@@ -178,28 +151,21 @@ struct AIProviderPresetTests {
         #expect(reencoded?["presetID"] as? String == "vendor-from-the-future")
     }
 
-    @Test("A preset provider builds the OpenAI-compatible transport")
-    func buildsTheSharedTransport() throws {
+    @Test("A preset provider builds the OpenAI-compatible transport", arguments: AIProviderPreset.all)
+    func buildsTheSharedTransport(preset: AIProviderPreset) throws {
         let descriptor = try #require(AIProviderRegistry.shared.descriptor(for: AIProviderType.custom.rawValue))
-        let config = AIProviderConfig(preset: .requesty)
+        let config = AIProviderConfig(preset: preset)
         #expect(descriptor.makeProvider(config, "key") is OpenAICompatibleProvider)
         #expect(AIProviderFactory.makeUncachedProvider(for: config, apiKey: "key") is OpenAICompatibleProvider)
     }
 
-    @Test("A preset that requires a key blocks the model list until one is typed")
-    func modelListWaitsForTheKey() {
-        let config = AIProviderConfig(preset: .requesty)
-        #expect(
-            AIModelListFetchGate.blocker(
-                fetchesModelList: true, takesEndpoint: true,
-                endpoint: config.endpoint, authStyle: config.authStyle, apiKey: ""
-            ) == .missingAPIKey
-        )
-        #expect(
-            AIModelListFetchGate.blocker(
-                fetchesModelList: true, takesEndpoint: true,
-                endpoint: config.endpoint, authStyle: config.authStyle, apiKey: "sk-live"
-            ) == nil
-        )
+    @Test("A preset that requires a key holds the model list until one is typed, and no longer",
+          arguments: AIProviderPreset.all)
+    func modelListWaitsForTheKey(preset: AIProviderPreset) {
+        let config = AIProviderConfig(preset: preset)
+        let descriptor = AIProviderRegistry.shared.descriptor(for: config.type.rawValue)
+        let expected: AIModelListFetchGate.Blocker? = preset.authStyle == .apiKey ? .missingAPIKey : nil
+        #expect(AIProviderDraftRules.modelListBlocker(descriptor: descriptor, draft: config, apiKey: "") == expected)
+        #expect(AIProviderDraftRules.modelListBlocker(descriptor: descriptor, draft: config, apiKey: "sk-live") == nil)
     }
 }

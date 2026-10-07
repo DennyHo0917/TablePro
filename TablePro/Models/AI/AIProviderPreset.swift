@@ -16,26 +16,29 @@ struct AIProviderPreset: Identifiable, Equatable, Sendable {
     let endpoint: String
     let symbolName: String
     let authStyle: AIProviderType.AuthStyle
-    /// Most servers answer a wrong key with 401. One that answers 403 would otherwise be reported
-    /// as a server error, which the chat offers to retry.
-    let rejectsBadKeyWithForbidden: Bool
+    /// Set when the vendor's 403 means the key itself is wrong or lacks access. Read as a server
+    /// error, it is offered for a retry that can never succeed.
+    let treatsForbiddenAsAuthFailure: Bool
 
+    /// Answers a wrong key with 403.
     static let requesty = AIProviderPreset(
         id: "requesty",
         displayName: "Requesty",
         endpoint: "https://router.requesty.ai",
         symbolName: "arrow.triangle.branch",
         authStyle: .apiKey,
-        rejectsBadKeyWithForbidden: true
+        treatsForbiddenAsAuthFailure: true
     )
 
+    /// Built on New API, which answers a wrong key with 401 and a key barred from the model, its
+    /// group or the client's IP with 403.
     static let apiRoute = AIProviderPreset(
         id: "api-route",
         displayName: "API Route",
         endpoint: "https://global.api-route.com",
         symbolName: "network",
         authStyle: .apiKey,
-        rejectsBadKeyWithForbidden: false
+        treatsForbiddenAsAuthFailure: true
     )
 
     static let all: [AIProviderPreset] = [.requesty, .apiRoute]

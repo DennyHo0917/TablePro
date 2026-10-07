@@ -134,19 +134,39 @@ struct OpenAICompatibleProviderConnectionTests {
         #expect(error?.isRetryable == false)
     }
 
-    @Test("A provider built from the Requesty preset reads a 403 as a rejected key")
-    func presetProviderCarriesTheRule() async {
-        StubConnectionProtocol.respond(status: 403, body: Self.requestyBadKeyBody)
+    /// Requesty sends these for a wrong key. API Route runs New API, which sends them for a key
+    /// barred from the requested model, so its message names the model.
+    private static let presetForbiddenBodies: [String: String] = [
+        "requesty": requestyBadKeyBody,
+        "api-route": #"{"error":{"code":"","message":"This token has no access to model gpt-6","type":"new_api_error"}}"#
+    ]
+
+    @Test("A provider built from a preset reports its vendor's 403 as a key failure with the vendor's reason",
+          arguments: AIProviderPreset.all)
+    func presetProviderCarriesTheRule(preset: AIProviderPreset) async throws {
+        let body = try #require(Self.presetForbiddenBodies[preset.id], "\(preset.id) has no recorded 403 body")
+        StubConnectionProtocol.respond(status: 403, body: body)
         let sessionConfig = URLSessionConfiguration.ephemeral
         sessionConfig.protocolClasses = [StubConnectionProtocol.self]
         let provider = OpenAICompatibleProvider(
-            config: AIProviderConfig(preset: .requesty),
+            config: AIProviderConfig(preset: preset),
             apiKey: "key",
             session: URLSession(configuration: sessionConfig)
         )
-        let error = await thrownError { _ = try await provider.testConnection() }
-        #expect(isAuthenticationFailure(error))
-        #expect(StubConnectionProtocol.lastRequestedURL() == "https://router.requesty.ai/v1/chat/completions")
+        let error = await thrownError {
+            let stream = provider.streamChat(
+                turns: [ChatTurnWire(role: .user, blocks: [.text("hi")])],
+                options: ChatTransportOptions(model: "gpt-6")
+            )
+            for try await _ in stream {}
+        }
+        guard case .authenticationFailed(let reason) = error else {
+            Issue.record("\(preset.id) reported \(String(describing: error)) for a 403")
+            return
+        }
+        #expect(reason == AIProviderError.parseErrorMessage(from: body))
+        #expect(error?.isRetryable == false)
+        #expect(StubConnectionProtocol.lastRequestedURL() == "\(preset.endpoint)/v1/chat/completions")
     }
 
     @Test("A plain custom provider built from its configuration keeps a 403 as a server error")
