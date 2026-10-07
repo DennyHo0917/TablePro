@@ -7,51 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.78.0] - 2026-10-07
+
+TablePro in French: pick Français in Settings > General.
+Switching databases on PostgreSQL, Redshift and CockroachDB keeps the open transaction and temp tables.
+Oracle fixes for column types, dates, LOBs and saving edits.
+
 ### Added
 
-- Manage Macs link on the activation limit error, opening the tablepro.app page that removes a Mac from the license.
-- French localization for macOS, with a Français option in Settings > General.
-- BOOLEAN, JSON and VECTOR in the Oracle column type picker.
+- Manage Macs link on the activation limit error, opening the tablepro.app page that removes a Mac from the license. (#3274)
+- French localization for macOS, with a Français option in Settings > General. (#3267 by @exaland)
+- BOOLEAN, JSON and VECTOR in the Oracle column type picker. (#3275)
 
 ### Changed
 
-- PostgreSQL, Redshift and CockroachDB keep one connection per database in the connections strip, and send TCP keepalives so idle ones stay open.
-- Manage Billing in Settings > License is now Manage Account.
+- PostgreSQL, Redshift and CockroachDB hold one connection per database, with TCP keepalives on idle ones. (#3271)
+- Manage Account replaces Manage Billing in Settings > License. (#3274)
 
 ### Fixed
 
-- Switching between two databases of a PostgreSQL connection reconnecting each time and dropping the open transaction and temp tables.
-- Switching back to a PostgreSQL, Redshift or CockroachDB database reloading its object list from empty.
-- A tab on a database the connection had switched away from running on a shared connection that closed after 10 minutes idle.
-- Import and Copy To committing a transaction left open on the target connection.
-- Health check reconnecting a PostgreSQL session that was sitting in a failed transaction.
-- Each switch between connections in the connections strip reloading that connection's schema.
-- Opening a connection fetching every column of its schema twice.
-- Unsaved grid edits not kept with their tab after jumping to a tab of a background connection.
-- Users & Roles discarding staged changes and Undo after switching tab or connection.
-- Object source, ClickHouse parts, chart and map reloading after switching connection and back, and the map losing zoom.
-- History drawer dropping loaded pages and the selected entry after switching connection and back.
-- Assistant transcript, agent session highlight, inspector field edits and Redis key filter reset after a connection switch.
-- Structure tab stuck on a cancellation error after switching connection while it loaded.
-- File handle leaked on each switch to a SQLite or Beancount connection.
-- Blank results pane instead of the data grid while a table loads, or after its load error is dismissed.
-- Previous table's primary key or row count carried into the next table opened in its tab, so edits matched wrong rows.
-- Status bar stuck on Loading after cancelling a Safe Mode (Full) confirmation for a table.
-- Approving a Safe Mode (Full) confirmation running that table's query in a tab opened from a link meanwhile.
-- Restored table tab that never loads when another tab was opened before its window came forward.
-- Save writing a table's query into the SQL file whose tab the table was opened over.
-- Closing a database entry or connection, or disconnecting, rolling back an open transaction without asking.
-- Oracle column types shown with the wrong size, such as NVARCHAR2(100) as nvarchar2(200) and TIMESTAMP as timestamp(6)(11).
-- Oracle DDL and SQL exports failing to restore a column with a default and NOT NULL, or a virtual column.
-- Oracle DATE values missing their time of day, and TIMESTAMP fractions cut to milliseconds or misread after a leading zero.
-- Oracle NCHAR and JSON values shown as `<decode error>`, BFILE values shown as NULL, and long decimals shown rounded.
-- Oracle tables with a UROWID or REF column, or an index-organized table's ROWID, failing to load and resetting the connection.
-- Crash reading an Oracle time zone west of UTC, a negative INTERVAL DAY TO SECOND, or an integer of 20 or more digits.
-- Oracle edits and deletes failing on rows with a DATE, TIMESTAMP, LOB or RAW value, or saving nothing with NCHAR or JSON.
-- Oracle tables whose first column is a CLOB or BLOB failing to open.
-- Oracle BLOB columns in query results treated as text, and an empty result listing every column of the first table.
-- Copying an Oracle table to another database turning NUMBER(10) keys into decimals and BOOLEAN or JSON into text.
-- Importing into a new Oracle table proposing TEXT columns, which Oracle rejects.
+- Switching databases on a PostgreSQL connection reconnecting and dropping the open transaction and temp tables. (#3271)
+- Switching back to a PostgreSQL, Redshift or CockroachDB database reloading its object list from empty. (#3273)
+- Tab left on a previous database running on a shared connection that closed after 10 minutes idle. (#3271)
+- Import and Copy To committing a transaction left open on the target connection. (#3271)
+- Health check reconnecting a PostgreSQL session that was sitting in a failed transaction. (#3271)
+- Each switch between connections in the connections strip reloading that connection's schema. (#3269)
+- Opening a connection fetching every column of its schema twice. (#3269)
+- Unsaved grid edits not kept with their tab after jumping to a tab of a background connection. (#3269)
+- Users & Roles discarding staged changes and Undo after switching tab or connection. (#3269)
+- Object source, ClickHouse parts, chart and map reloading after switching connection and back, and the map losing zoom. (#3269)
+- History drawer dropping loaded pages and the selected entry after switching connection and back. (#3269)
+- Assistant transcript, agent session highlight, inspector edits and Redis key filter reset by a connection switch. (#3269)
+- Structure tab stuck on a cancellation error after switching connection while it loaded. (#3269)
+- File handle leaked on each switch to a SQLite or Beancount connection. (#3269)
+- Blank results pane instead of the data grid while a table loads, or after its load error is dismissed. (#3270)
+- Edits saved against the wrong rows after a tab kept the previous table's primary key or row count. (#3270)
+- Status bar stuck on Loading after cancelling a Safe Mode (Full) confirmation for a table. (#3270)
+- Approving a Safe Mode (Full) confirmation running that table's query in a tab opened from a link meanwhile. (#3270)
+- Restored table tab that never loads when another tab was opened before its window came forward. (#3270)
+- Save writing a table's query into the SQL file whose tab the table was opened over. (#3270)
+- Closing a database entry or connection, or disconnecting, rolling back an open transaction without asking. (#3272)
+- Oracle column types shown wrong, such as NVARCHAR2(100) as nvarchar2(200) and TIMESTAMP as timestamp(6)(11). (#3275)
+- Oracle DDL and SQL exports failing to restore a column with a default and NOT NULL, or a virtual column. (#3275)
+- Oracle DATE values losing the time of day, and TIMESTAMP fractions cut to milliseconds or misread after a leading 0. (#3275)
+- Oracle NCHAR and JSON values shown as `<decode error>`, BFILE values shown as NULL, and long decimals shown rounded. (#3275)
+- Oracle UROWID and REF columns, and index-organized table ROWIDs, failing to load and resetting the connection. (#3275)
+- Crash reading an Oracle time zone west of UTC, a negative INTERVAL DAY TO SECOND, or an integer of 20 or more digits. (#3275)
+- Oracle edits and deletes failing for DATE, TIMESTAMP, LOB or RAW values, or saving nothing for NCHAR or JSON. (#3275)
+- Oracle tables whose first column is a CLOB or BLOB failing to open. (#3275)
+- Oracle BLOB columns in query results treated as text, and an empty result listing every column of the first table. (#3275)
+- Copying an Oracle table to another database turning NUMBER(10) keys into decimals and BOOLEAN or JSON into text. (#3275)
+- Importing into a new Oracle table proposing TEXT columns, which Oracle rejects. (#3275)
 
 ## [0.77.2] - 2026-10-05
 
@@ -5522,7 +5528,8 @@ TablePro is a native macOS database client built with SwiftUI and AppKit, design
     - Custom SQL query templates
     - Performance optimized for large datasets
 
-[Unreleased]: https://github.com/TableProApp/TablePro/compare/v0.77.2...HEAD
+[Unreleased]: https://github.com/TableProApp/TablePro/compare/v0.78.0...HEAD
+[0.78.0]: https://github.com/TableProApp/TablePro/compare/v0.77.2...v0.78.0
 [0.77.2]: https://github.com/TableProApp/TablePro/compare/v0.77.1...v0.77.2
 [0.77.1]: https://github.com/TableProApp/TablePro/compare/v0.77.0...v0.77.1
 [0.77.0]: https://github.com/TableProApp/TablePro/compare/v0.76.1...v0.77.0

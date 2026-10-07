@@ -1,3 +1,7 @@
-# TablePro 0.77.2
+# TablePro 0.78.0
 
-This release is fixes and refinements. Every entry is in the changelog.
+TablePro in French: pick Français in Settings > General.
+
+Switching databases on PostgreSQL, Redshift and CockroachDB keeps the open transaction and temp tables.
+
+Oracle fixes for column types, dates, LOBs and saving edits.
